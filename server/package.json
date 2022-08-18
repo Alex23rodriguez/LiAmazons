@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "boardgame.io": "^0.49.12"
+  },
+  "devDependencies": {
+    "esm": "^3.2.25"
+  }
+}
