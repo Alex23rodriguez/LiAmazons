@@ -1,4 +1,7 @@
 {
+  "scripts": {
+    "start": "node -r esm server.js"
+  },
   "dependencies": {
     "boardgame.io": "^0.49.12"
   },
