@@ -16,6 +16,9 @@ function Load(fen: FEN) {
 export const AmazonsGame: Game<AmazonsState> = {
   name: "amazons",
 
+  minPlayers: 2,
+  maxPlayers: 2,
+
   setup: (_, setupData: SetupData) => {
     if (setupData?.fen) {
       return { fen: setupData.fen };

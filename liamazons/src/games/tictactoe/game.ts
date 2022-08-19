@@ -34,6 +34,9 @@ function IsVictory(cells: string[]) {
 export const TicTacToeGame: bgGame<TicTacToeState> = {
   name: "tic-tac-toe",
 
+  minPlayers: 2,
+  maxPlayers: 2,
+
   setup: () => ({
     cells: new Array(9).fill(null),
   }),
