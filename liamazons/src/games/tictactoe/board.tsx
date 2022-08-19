@@ -47,9 +47,9 @@ export class Board extends React.Component<TTTBoardProps> {
   }
 
   render() {
-    let tbody = [];
+    const tbody = [];
     for (let i = 0; i < 3; i++) {
-      let cells = [];
+      const cells = [];
       for (let j = 0; j < 3; j++) {
         const id = 3 * i + j;
         cells.push(
