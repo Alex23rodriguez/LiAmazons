@@ -7,7 +7,7 @@
  */
 import type { Game as bgGame } from "boardgame.io";
 
-interface TicTacToeState {
+export interface TicTacToeState {
   cells: string[];
 }
 

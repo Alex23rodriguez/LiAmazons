@@ -2,14 +2,14 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import { trpc } from "../utils/trpc";
 import { Lobby } from "boardgame.io/react";
-import { Game as TicTacToe } from "../games/tictactoe/game";
+import { TicTacToeGame as TicTacToe } from "../games/tictactoe/game";
 import { Board as TicTacToeBoard } from "../games/tictactoe/board";
 import { clientEnv } from "../env/schema.mjs";
 // import { TicTacToe } from "@/games/tictactoe/game";
 // import { TicTacToeBoard } from "@/games/tictactoe/board";
 
 const server = clientEnv.NEXT_PUBLIC_SERVER_URL;
-console.log(clientEnv.NEXT_PUBLIC_SERVER_URL);
+// console.log(clientEnv.NEXT_PUBLIC_SERVER_URL);
 const Home: NextPage = () => {
   const hello = trpc.proxy.example.hello.useQuery({ text: "from tRPC" });
 

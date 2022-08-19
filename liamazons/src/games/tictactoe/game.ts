@@ -31,7 +31,7 @@ function IsVictory(cells: string[]) {
   return positions.map(isRowComplete).some((i) => i === true);
 }
 
-export const Game: bgGame<TicTacToeState> = {
+export const TicTacToeGame: bgGame<TicTacToeState> = {
   name: "tic-tac-toe",
 
   setup: () => ({
