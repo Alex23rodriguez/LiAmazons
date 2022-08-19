@@ -3,6 +3,8 @@ import "../styles/globals.css";
 import { SessionProvider } from "next-auth/react";
 import type { AppType } from "next/dist/shared/lib/utils";
 import { trpc } from "../utils/trpc";
+import "../styles/lobby.css";
+import "../styles/board.css";
 
 const MyApp: AppType = ({ Component, pageProps }) => {
   return (
