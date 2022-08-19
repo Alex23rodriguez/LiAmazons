@@ -6,6 +6,9 @@ import type { FEN, Move } from "amazons-game-engine/dist/types";
 export interface AmazonsState {
   fen: FEN;
 }
+export interface SetupData {
+  fen: FEN;
+}
 
 function Load(fen: FEN) {
   return Amazons(fen);
@@ -13,10 +16,11 @@ function Load(fen: FEN) {
 export const AmazonsGame: Game<AmazonsState> = {
   name: "amazons",
 
-  setup: () => {
+  setup: (_, setupData: SetupData) => {
+    if (setupData?.fen) {
+      return { fen: setupData.fen };
+    }
     return { fen: DEFAULT_POSITIONS[6]! };
-    // return { fen: DEFAULT_POSITIONS[10], last_move: null };
-    // return { fen: "2/wb w - 1", last_move: null };
   },
 
   moves: {
