@@ -41,7 +41,7 @@ export const AmazonsGame: Game<AmazonsState> = {
 
     random_move: ((G) => {
       const amazons = Load(G.fen);
-      let move = amazons.random_move();
+      const move = amazons.random_move();
       return { fen: amazons.fen(), last_move: move };
     }) as MoveFn<AmazonsState>,
   } as MoveMap<AmazonsState>,
