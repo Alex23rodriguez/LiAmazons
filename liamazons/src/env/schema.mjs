@@ -7,7 +7,7 @@ import { z } from "zod";
  */
 export const serverSchema = z.object({
   // DATABASE_URL: z.string().url(),
-  // NODE_ENV: z.enum(["development", "test", "production"]),
+  NODE_ENV: z.enum(["development", "test", "production"]),
   // NEXTAUTH_SECRET: z.string(),
   // NEXTAUTH_URL: z.string().url(),
   // DISCORD_CLIENT_ID: z.string(),
@@ -21,7 +21,6 @@ export const serverSchema = z.object({
  */
 export const clientSchema = z.object({
   NEXT_PUBLIC_SERVER_URL: z.string().url(),
-  NEXT_PUBLIC_NODE_ENV: z.string(),
 });
 
 /**
@@ -32,5 +31,4 @@ export const clientSchema = z.object({
  */
 export const clientEnv = {
   NEXT_PUBLIC_SERVER_URL: "https://liamazons-server.herokuapp.com/",
-  NEXT_PUBLIC_NODE_ENV: "production",
 };
