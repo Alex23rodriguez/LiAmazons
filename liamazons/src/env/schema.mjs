@@ -21,7 +21,7 @@ export const serverSchema = z.object({
  */
 export const clientSchema = z.object({
   NEXT_PUBLIC_SERVER_URL: z.string().url(),
-  NODE_ENV: z.string(),
+  NEXT_PUBLIC_NODE_ENV: z.string(),
 });
 
 /**
@@ -32,5 +32,5 @@ export const clientSchema = z.object({
  */
 export const clientEnv = {
   NEXT_PUBLIC_SERVER_URL: "https://liamazons-server.herokuapp.com/",
-  NODE_ENV: "production",
+  NEXT_PUBLIC_NODE_ENV: "production",
 };
