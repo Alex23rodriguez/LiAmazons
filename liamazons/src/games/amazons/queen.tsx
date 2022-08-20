@@ -1,7 +1,7 @@
 import type { Square as TSquare } from "amazons-game-engine/dist/types";
 import type { FC } from "react";
 
-let queenCount = 1;
+// let queenCount = 1;
 export const Queen: FC<{
   square: TSquare;
   team: string;
@@ -11,7 +11,7 @@ export const Queen: FC<{
   return (
     <div
       onClick={() => props.onClick(props.square, props.team)}
-      id={"queen" + queenCount++}
+      // id={"queen" + queenCount++}
       className="absolute z-20 grid place-items-center mysmooth"
       style={{
         width: props.size,
