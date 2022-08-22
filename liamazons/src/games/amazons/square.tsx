@@ -1,17 +1,6 @@
 import { Square as TSquare } from "amazons-game-engine/dist/types";
 import { FC } from "react";
-
-const colorPalette: { [key: string]: string } = {
-  light: "beige",
-  dark: "#16a34a",
-  w: "white",
-  b: "slateblue",
-  canMove: "black",
-  canMoveShooting: "red",
-  arrow: "black",
-  light_h: "yellow",
-  dark_h: "yellow",
-};
+import { colorPalette } from "./settings";
 
 export const Square: FC<{
   square: TSquare;
