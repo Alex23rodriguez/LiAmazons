@@ -5,6 +5,7 @@ import { useState, useMemo, FC } from "react";
 import type { BoardProps } from "boardgame.io/react";
 import type { AmazonsState } from "./game";
 import { Queen } from "./queen";
+import { Square } from "./square";
 
 export const Board: FC<BoardProps<AmazonsState>> = ({ ctx, G, moves }) => {
   const amz = Amazons(G.fen);
@@ -23,7 +24,11 @@ export const Board: FC<BoardProps<AmazonsState>> = ({ ctx, G, moves }) => {
 
   // TODO: remove grid-cols-6
   return (
-    <div id="board" className="select-none grid grid-cols-6">
+    <div
+      id="board"
+      className="select-none grid grid-cols-6"
+      style={{ width: board_size }}
+    >
       {Object.entries(pieces).map(([piece, sq_array]) =>
         piece === "x"
           ? null
@@ -37,6 +42,15 @@ export const Board: FC<BoardProps<AmazonsState>> = ({ ctx, G, moves }) => {
               />
             ))
       )}
+      {square_names.map((sq) => (
+        <Square
+          token={sq === "b1" ? "x" : sq === "b2" ? "m" : ""}
+          square={sq}
+          color={amz.square_color(sq)}
+          onClick={onClick}
+          selected={false}
+        />
+      ))}
     </div>
   );
 };
