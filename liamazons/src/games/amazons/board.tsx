@@ -1,13 +1,21 @@
 import { Amazons, coords_to_square } from "amazons-game-engine";
-import { FEN, Size, Square as TSquare } from "amazons-game-engine/dist/types";
+import {
+  FEN,
+  Piece,
+  Size,
+  Square as TSquare,
+} from "amazons-game-engine/dist/types";
 import { useState, useMemo, FC } from "react";
 
 import type { BoardProps } from "boardgame.io/react";
 import type { AmazonsState } from "./game";
 import { Queen } from "./queen";
 import { Square } from "./square";
+import { global } from "styled-jsx/css";
 
 export const Board: FC<BoardProps<AmazonsState>> = ({ ctx, G, moves }) => {
+  // console.log("hi");
+  // console.log(ctx, G);
   const amz = Amazons(G.fen);
   const size = amz.size();
   const { rows, cols } = size;
@@ -16,13 +24,22 @@ export const Board: FC<BoardProps<AmazonsState>> = ({ ctx, G, moves }) => {
     index_to_square(i, size)
   );
 
-  const [pieces, setPieces] = useState(amz.pieces);
+  const [pieces, setPieces] = useState(amz.pieces());
+  const [selected, setSelected] = useState<TSquare | null>();
+  // (window as any).pieces = pieces;
 
   const board_size = "min(80vh, 80vw)";
   const square_size = `calc(${board_size} / ${cols})`;
-  const onClick = () => {};
+  const onClick = (sq: TSquare, token: string) => {
+    console.log(sq, token);
+    setSelected(sq);
+    setMyq(sq);
+    console.log(myq);
+  };
 
+  const [myq, setMyq] = useState<TSquare>("a1");
   // TODO: remove grid-cols-6
+  if ((global as any).window) (window as any).setMyq = setMyq;
   return (
     <div
       id="board"
@@ -42,9 +59,18 @@ export const Board: FC<BoardProps<AmazonsState>> = ({ ctx, G, moves }) => {
               />
             ))
       )}
+      <Queen
+        key={"myqueen"}
+        square={myq}
+        team="w"
+        size={square_size}
+        onClick={onClick}
+      />
+
       {square_names.map((sq) => (
         <Square
-          token={sq === "b1" ? "x" : sq === "b2" ? "m" : ""}
+          key={sq}
+          token={pieces["x"]?.includes(sq) ? "x" : ""}
           square={sq}
           color={amz.square_color(sq)}
           onClick={onClick}

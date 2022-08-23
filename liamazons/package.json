@@ -18,6 +18,7 @@
     "@trpc/server": "10.0.0-alpha.41",
     "amazons-game-engine": "^0.1.17",
     "boardgame.io": "^0.49.12",
+    "framer-motion": "^7.2.0",
     "next": "12.2.5",
     "next-auth": "^4.10.2",
     "react": "18.2.0",
