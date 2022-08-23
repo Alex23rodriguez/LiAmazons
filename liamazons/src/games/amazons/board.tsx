@@ -6,6 +6,7 @@ import {
   Square as TSquare,
 } from "amazons-game-engine/dist/types";
 import { useState, useMemo, FC } from "react";
+// import { useAutoAnimate } from "@formkit/auto-animate/react";
 
 import type { BoardProps } from "boardgame.io/react";
 import type { AmazonsState } from "./game";
@@ -37,11 +38,14 @@ export const Board: FC<BoardProps<AmazonsState>> = ({ ctx, G, moves }) => {
     // console.log(myq);
   };
 
+  // const [parent] = useAutoAnimate<HTMLDivElement>();
+
   const [myq, setMyq] = useState<TSquare>("a1");
   // TODO: remove grid-cols-6
   // if ((global as any).window) (window as any).setMyq = setMyq;
   return (
     <div
+      // ref={parent}
       id="board"
       className="select-none grid grid-cols-6"
       style={{ width: board_size }}

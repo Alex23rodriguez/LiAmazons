@@ -3,6 +3,7 @@ import type { FC } from "react";
 import { colorPalette } from "./settings";
 
 import { makeTransform } from "./util";
+// import { useAutoAnimate } from "@formkit/auto-animate/react";
 
 // let queenCount = 1;
 export const Queen: FC<{
@@ -11,8 +12,10 @@ export const Queen: FC<{
   size: string;
   onClick: (sq: TSquare, token: string) => void;
 }> = (props) => {
+  // const [parent] = useAutoAnimate<HTMLDivElement>();
   return (
     <div
+      // ref={parent}
       onClick={() => props.onClick(props.square, props.team)}
       // id={"queen" + queenCount++}
       className="absolute z-20 grid place-items-center"
