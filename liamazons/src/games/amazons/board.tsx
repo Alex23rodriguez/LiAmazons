@@ -11,7 +11,7 @@ import type { BoardProps } from "boardgame.io/react";
 import type { AmazonsState } from "./game";
 import { Queen } from "./queen";
 import { Square } from "./square";
-import { global } from "styled-jsx/css";
+// import { global } from "styled-jsx/css";
 
 export const Board: FC<BoardProps<AmazonsState>> = ({ ctx, G, moves }) => {
   // console.log("hi");
@@ -31,15 +31,15 @@ export const Board: FC<BoardProps<AmazonsState>> = ({ ctx, G, moves }) => {
   const board_size = "min(80vh, 80vw)";
   const square_size = `calc(${board_size} / ${cols})`;
   const onClick = (sq: TSquare, token: string) => {
-    console.log(sq, token);
+    // console.log(sq, token);
     setSelected(sq);
     setMyq(sq);
-    console.log(myq);
+    // console.log(myq);
   };
 
   const [myq, setMyq] = useState<TSquare>("a1");
   // TODO: remove grid-cols-6
-  if ((global as any).window) (window as any).setMyq = setMyq;
+  // if ((global as any).window) (window as any).setMyq = setMyq;
   return (
     <div
       id="board"

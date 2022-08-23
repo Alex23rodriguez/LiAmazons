@@ -3,7 +3,6 @@ import type { FC } from "react";
 import { colorPalette } from "./settings";
 
 import { makeTransform } from "./util";
-import { motion } from "framer-motion";
 
 // let queenCount = 1;
 export const Queen: FC<{
@@ -13,24 +12,15 @@ export const Queen: FC<{
   onClick: (sq: TSquare, token: string) => void;
 }> = (props) => {
   return (
-    <motion.div
-      animate={{
-        transform: makeTransform(props.square),
-      }}
-      transition={{
-        default: {
-          ease: "easeInOut",
-          duration: 0.25,
-        },
-      }}
+    <div
       onClick={() => props.onClick(props.square, props.team)}
       // id={"queen" + queenCount++}
       className="absolute z-20 grid place-items-center"
       style={{
         width: props.size,
         height: props.size,
-        // transform: makeTransform(props.square),
-        // transition: "transpose 250ms ease-in-out",
+        transform: makeTransform(props.square),
+        transition: "transpose 250ms ease-in-out",
       }}
     >
       <div
@@ -38,6 +28,6 @@ export const Queen: FC<{
         style={{ backgroundColor: colorPalette[props.team] }}
       />
       <div className="absolute w-3/5 h-3/5 rounded-full border border-black" />
-    </motion.div>
+    </div>
   );
 };
