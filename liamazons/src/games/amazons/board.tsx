@@ -7,7 +7,6 @@ import {
 } from "amazons-game-engine/dist/types";
 import { useState, useMemo, FC } from "react";
 // import { useAutoAnimate } from "@formkit/auto-animate/react";
-import { Flipper, Flipped } from "react-flip-toolkit";
 
 import type { BoardProps } from "boardgame.io/react";
 import type { AmazonsState } from "./game";
@@ -45,48 +44,47 @@ export const Board: FC<BoardProps<AmazonsState>> = ({ ctx, G, moves }) => {
   // TODO: remove grid-cols-6
   // if ((global as any).window) (window as any).setMyq = setMyq;
   return (
-    <Flipper flipKey={selected} applyTransformOrigin={false}>
-      <div
-        // ref={parent}
-        id="board"
-        className="select-none grid grid-cols-6"
-        style={{ width: board_size }}
-      >
-        {Object.entries(pieces).map(([piece, sq_array]) =>
-          piece === "x"
-            ? null
-            : sq_array.map((sq, i) => (
-                <Queen
-                  queenId={i}
-                  key={i}
-                  square={sq}
-                  team={piece}
-                  size={square_size}
-                  onClick={onClick}
-                />
-              ))
-        )}
-        <Queen
-          queenId={123}
-          key={"myqueen"}
-          square={myq}
-          team="w"
-          size={square_size}
-          onClick={onClick}
-        />
+    <div
+      // ref={parent}
+      id="board"
+      className="select-none grid grid-cols-6"
+      style={{ width: board_size }}
+    >
+      {Object.entries(pieces).map(([piece, sq_array]) =>
+        piece === "x"
+          ? null
+          : sq_array.map((sq, i) => (
+              <Queen
+                queenId={i}
+                key={i}
+                square={sq}
+                team={piece}
+                size={square_size}
+                onClick={onClick}
+              />
+            ))
+      )}
+      <Queen
+        queenId={123}
+        key={"myqueen"}
+        square={myq}
+        team="w"
+        size={square_size}
+        onClick={onClick}
+      />
 
-        {square_names.map((sq) => (
-          <Square
-            key={sq}
-            token={pieces["x"]?.includes(sq) ? "x" : ""}
-            square={sq}
-            color={amz.square_color(sq)}
-            onClick={onClick}
-            selected={false}
-          />
-        ))}
-      </div>
-    </Flipper>
+      {square_names.map((sq) => (
+        <Square
+          key={sq}
+          token={pieces["x"]?.includes(sq) ? "x" : ""}
+          square={sq}
+          color={amz.square_color(sq)}
+          onClick={onClick}
+          selected={false}
+        />
+      ))}
+    </div>
+    // </Flipper>
   );
 };
 
