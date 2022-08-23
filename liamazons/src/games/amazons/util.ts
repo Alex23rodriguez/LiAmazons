@@ -10,7 +10,7 @@ export function makeTransform(sq: Square, size: Size) {
   return ans;
 }
 
-export function makeAndRunAnim(el: HTMLElement, sq: Square, size: Size) {
+export function makeAndRunAnim(el: HTMLDivElement, sq: Square, size: Size) {
   const transformStr = makeTransform(sq, size);
 
   el.animate(

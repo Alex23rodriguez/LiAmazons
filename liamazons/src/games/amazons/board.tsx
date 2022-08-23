@@ -5,13 +5,14 @@ import {
   Size,
   Square as TSquare,
 } from "amazons-game-engine/dist/types";
-import { useState, useMemo, FC } from "react";
+import { useState, useMemo, FC, RefObject } from "react";
 // import { useAutoAnimate } from "@formkit/auto-animate/react";
 
 import type { BoardProps } from "boardgame.io/react";
 import type { AmazonsState } from "./game";
 import { Queen } from "./queen";
 import { Square } from "./square";
+import { makeAndRunAnim } from "./util";
 // import { global } from "styled-jsx/css";
 
 export const Board: FC<BoardProps<AmazonsState>> = ({ ctx, G, moves }) => {
@@ -25,24 +26,29 @@ export const Board: FC<BoardProps<AmazonsState>> = ({ ctx, G, moves }) => {
     index_to_square(i, size)
   );
 
-  const [pieces, setPieces] = useState(amz.pieces());
+  // const [pieces, setPieces] = useState(amz.pieces());
+  let pieces = amz.pieces();
   const [selected, setSelected] = useState<TSquare | null>();
-  // (window as any).pieces = pieces;
+  // const [refPiece, setRefPiece] = useState<RefObject<HTMLDivElement>>();
+  let currElement: HTMLDivElement | null;
 
   const board_size = "min(80vh, 80vw)";
   const square_size = `calc(${board_size} / ${cols})`;
-  const onClick = (sq: TSquare, token: string) => {
-    // console.log(sq, token);
-    setSelected(sq);
-    setMyq(sq);
-    // console.log(myq);
-  };
+  const onClick = (
+    sq: TSquare,
+    token: string,
+    ref?: RefObject<HTMLDivElement>
+  ) => {
+    console.log(sq, token, ref);
+    if (!currElement && ref) {
+      currElement = ref.current;
+    } else if (currElement) {
+      makeAndRunAnim(currElement, sq, size);
+      currElement = null;
+    }
+  } 
 
-  // const [parent] = useAutoAnimate<HTMLDivElement>();
-
-  const [myq, setMyq] = useState<TSquare>("a1");
   // TODO: remove grid-cols-6
-  // if ((global as any).window) (window as any).setMyq = setMyq;
   return (
     <div
       // ref={parent}
@@ -64,14 +70,6 @@ export const Board: FC<BoardProps<AmazonsState>> = ({ ctx, G, moves }) => {
               />
             ))
       )}
-      <Queen
-        queenId={123}
-        key={"myqueen"}
-        square={myq}
-        team="w"
-        size={square_size}
-        onClick={onClick}
-      />
 
       {square_names.map((sq) => (
         <Square
