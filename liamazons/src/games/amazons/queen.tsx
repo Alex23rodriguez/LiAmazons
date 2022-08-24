@@ -1,6 +1,7 @@
 import type { Square as TSquare } from "amazons-game-engine/dist/types";
 import { FC, MutableRefObject, RefObject, useRef } from "react";
 import { colorPalette } from "./settings";
+import { makeTransform } from "./util";
 
 // import { makeTransform } from "./util";
 // import { useAutoAnimate } from "@formkit/auto-animate/react";
@@ -10,17 +11,15 @@ export const Queen: FC<{
   square: TSquare;
   team: string;
   size: string;
-  onClick: (sq: TSquare, token: string, ref: RefObject<HTMLDivElement>) => void;
+  onClick: (token: string, id:number, ref: RefObject<HTMLDivElement>) => void;
   queenId: number;
 }> = (props) => {
   console.log("making a queen!");
-  // const [parent] = useAutoAnimate<HTMLDivElement>();
   const ref = useRef<HTMLDivElement>(null);
   return (
     <div
       ref={ref}
-      onClick={() => props.onClick(props.square, props.team, ref)}
-      // id={"queen" + queenCount++}
+      onClick={() => props.onClick(props.team, props.queenId, ref)}
       className="absolute z-20 grid place-items-center"
       style={{
         width: props.size,

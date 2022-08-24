@@ -7,7 +7,7 @@ export const Square: FC<{
   color: "light" | "dark";
   token: string;
   selected: boolean;
-  onClick: (sq: TSquare, token: string) => void;
+  onClick: (token: string, sq:TSquare) => void;
 }> = (props) => {
   const color = () => {
     let key = props.color;
@@ -20,7 +20,7 @@ export const Square: FC<{
       id={props.square}
       className="relative w-full"
       style={{ paddingBottom: "100%", backgroundColor: color() }}
-      onClick={() => props.onClick(props.square, props.token)}
+      onClick={() => props.onClick(props.token,props.square, )}
     ></div>
   );
 };
