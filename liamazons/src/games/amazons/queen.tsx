@@ -8,10 +8,10 @@ import { makeTransform } from "./util";
 
 // let queenCount = 1;
 export const Queen: FC<{
-  square: TSquare;
+  initTransform: string;
   team: string;
   size: string;
-  onClick: (token: string, id:number, ref: RefObject<HTMLDivElement>) => void;
+  onClick: (token: string, id: number, ref: RefObject<HTMLDivElement>) => void;
   queenId: number;
 }> = (props) => {
   console.log("making a queen!");
@@ -24,6 +24,7 @@ export const Queen: FC<{
       style={{
         width: props.size,
         height: props.size,
+        transform: props.initTransform,
       }}
     >
       <div

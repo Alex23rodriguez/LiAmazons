@@ -1,15 +1,12 @@
 import { Amazons, coords_to_square } from "amazons-game-engine";
-import {
-  Size,
-  Square as TSquare,
-} from "amazons-game-engine/dist/types";
-import { useState, FC, RefObject } from "react";
+import { Size, Square as TSquare } from "amazons-game-engine/dist/types";
+import {  FC, RefObject, } from "react";
 
 import type { BoardProps } from "boardgame.io/react";
 import type { AmazonsState } from "./game";
 import { Queen } from "./queen";
 import { Square } from "./square";
-import { makeAndRunAnim } from "./util";
+import { makeAndRunAnim, makeTransform } from "./util";
 
 export const Board: FC<BoardProps<AmazonsState>> = ({ ctx, G, moves }) => {
   const amz = Amazons(G.fen);
@@ -26,7 +23,7 @@ export const Board: FC<BoardProps<AmazonsState>> = ({ ctx, G, moves }) => {
   const board_size = "min(80vh, 80vw)";
   const square_size = `calc(${board_size} / ${cols})`;
 
-  function onClick(token: string, sq: TSquare): void; // for squares
+  function onClick(token: "", sq: TSquare): void; // for squares
   function onClick(
     token: string,
     id: number,
@@ -34,7 +31,7 @@ export const Board: FC<BoardProps<AmazonsState>> = ({ ctx, G, moves }) => {
   ): void; // for queens
   function onClick(token: string): void; // for other
   function onClick(
-    token: any,
+    token: string,
     sq_or_id?: TSquare | number,
     ref?: RefObject<HTMLDivElement>
   ) {
@@ -63,7 +60,7 @@ export const Board: FC<BoardProps<AmazonsState>> = ({ ctx, G, moves }) => {
               <Queen
                 queenId={i}
                 key={i}
-                square={sq}
+                initTransform={makeTransform(sq, size)}
                 team={piece as "w" | "b"}
                 size={square_size}
                 onClick={onClick}
