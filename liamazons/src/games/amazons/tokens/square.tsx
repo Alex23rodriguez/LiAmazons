@@ -30,6 +30,7 @@ export const Square: FC<{
       ) : (
         props.token === "x" && <Arrow />
       )}
+      <p className="absolute">{props.square}</p>
     </div>
   );
 };

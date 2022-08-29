@@ -33,9 +33,12 @@ export const AmazonsGame: Game<AmazonsState> = {
         (amazons.turn() == "w" && ctx.currentPlayer == "1") ||
         (amazons.turn() == "b" && ctx.currentPlayer == "0")
       ) {
+        console.log("wrong player!");
         return { ...G };
       }
+      console.log(m);
       amazons.move(m);
+      console.log(amazons.fen());
       return { fen: amazons.fen(), last_move: m };
     }) as MoveFn<AmazonsState>,
 

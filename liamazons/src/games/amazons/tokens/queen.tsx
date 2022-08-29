@@ -3,11 +3,12 @@ import { FC, MutableRefObject, RefObject, useRef } from "react";
 import { colorPalette } from "../settings";
 
 export const Queen: FC<{
-  initTransform: string;
+  queenId: number;
+  square: TSquare;
   team: string;
   size: string;
   onClick: (token: string, id: number, ref: RefObject<HTMLDivElement>) => void;
-  queenId: number;
+  initTransform: string;
 }> = (props) => {
   const ref = useRef<HTMLDivElement>(null);
   return (
