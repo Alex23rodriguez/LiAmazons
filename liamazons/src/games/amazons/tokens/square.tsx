@@ -8,6 +8,7 @@ export const Square: FC<{
   square: TSquare;
   color: "light" | "dark";
   token: string;
+  shooting: boolean;
   selected: boolean;
   onClick: (token: string, sq: TSquare) => void;
 }> = (props) => {
@@ -25,7 +26,7 @@ export const Square: FC<{
       onClick={() => props.onClick(props.token, props.square)}
     >
       {props.token === "m" ? (
-        <Mover shooting={false} />
+        <Mover shooting={props.shooting} />
       ) : (
         props.token === "x" && <Arrow />
       )}

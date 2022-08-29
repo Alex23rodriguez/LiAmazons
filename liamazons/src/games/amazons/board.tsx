@@ -1,6 +1,6 @@
 import { Amazons, coords_to_square } from "amazons-game-engine";
 import { Size, Square as TSquare } from "amazons-game-engine/dist/types";
-import { FC, RefObject } from "react";
+import { FC, RefObject, useState } from "react";
 
 import type { BoardProps } from "boardgame.io/react";
 import type { AmazonsState } from "./game";
@@ -13,11 +13,25 @@ export const Board: FC<BoardProps<AmazonsState>> = ({ ctx, G, moves }) => {
   const size = amz.size();
   const { rows, cols } = size;
 
+  // if (global.window) {
+  // (window as any).amz = amz;
+  // }
+
   const square_names = Array.from({ length: cols * rows }, (_, i) =>
     index_to_square(i, size)
   );
 
+  const getMovable: (a: typeof amz) => TSquare[] = (amz) => {
+    if (amz.shooting()) {
+      return amz.moves().flat() as TSquare[];
+    }
+    return [];
+  };
+
   let pieces = amz.pieces();
+  let [arrows, setArrows] = useState(pieces["x"]!);
+  let [movable, setMovable] = useState<TSquare[]>(getMovable(amz));
+
   let currElement: HTMLDivElement | null;
 
   const board_size = "min(80vh, 80vw)";
@@ -71,7 +85,8 @@ export const Board: FC<BoardProps<AmazonsState>> = ({ ctx, G, moves }) => {
       {square_names.map((sq) => (
         <Square
           key={sq}
-          token={pieces["x"]?.includes(sq) ? "x" : ""}
+          token={arrows.includes(sq) ? "x" : movable.includes(sq) ? "m" : ""}
+          shooting={amz.shooting()}
           square={sq}
           color={amz.square_color(sq)}
           onClick={onClick}
