@@ -1,6 +1,8 @@
 import { Square as TSquare } from "amazons-game-engine/dist/types";
 import { FC } from "react";
 import { colorPalette } from "../settings";
+import { Arrow } from "./arrow";
+import { Mover } from "./mover";
 
 export const Square: FC<{
   square: TSquare;
@@ -21,6 +23,12 @@ export const Square: FC<{
       className="relative w-full"
       style={{ paddingBottom: "100%", backgroundColor: color() }}
       onClick={() => props.onClick(props.token, props.square)}
-    ></div>
+    >
+      {props.token === "m" ? (
+        <Mover shooting={false} />
+      ) : (
+        props.token === "x" && <Arrow />
+      )}
+    </div>
   );
 };

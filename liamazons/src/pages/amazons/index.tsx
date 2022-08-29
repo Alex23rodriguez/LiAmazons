@@ -5,5 +5,6 @@ import { Page } from "../../games/amazons/page";
 const App = Client({
   game: AmazonsGame,
   board: Page,
+  debug: false,
 });
 export default App;
