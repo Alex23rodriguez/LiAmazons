@@ -1,6 +1,6 @@
 import { Square as TSquare } from "amazons-game-engine/dist/types";
 import { FC } from "react";
-import { colorPalette } from "./settings";
+import { colorPalette } from "../settings";
 export const Mover: FC<{ shooting: boolean }> = ({ shooting }) => {
   return (
     <div className="absolute grid place-items-center w-full h-full">

@@ -1,12 +1,7 @@
 import type { Square as TSquare } from "amazons-game-engine/dist/types";
 import { FC, MutableRefObject, RefObject, useRef } from "react";
-import { colorPalette } from "./settings";
-import { makeTransform } from "./util";
+import { colorPalette } from "../settings";
 
-// import { makeTransform } from "./util";
-// import { useAutoAnimate } from "@formkit/auto-animate/react";
-
-// let queenCount = 1;
 export const Queen: FC<{
   initTransform: string;
   team: string;
@@ -14,7 +9,6 @@ export const Queen: FC<{
   onClick: (token: string, id: number, ref: RefObject<HTMLDivElement>) => void;
   queenId: number;
 }> = (props) => {
-  console.log("making a queen!");
   const ref = useRef<HTMLDivElement>(null);
   return (
     <div

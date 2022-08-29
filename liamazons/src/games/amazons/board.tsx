@@ -1,11 +1,11 @@
 import { Amazons, coords_to_square } from "amazons-game-engine";
 import { Size, Square as TSquare } from "amazons-game-engine/dist/types";
-import {  FC, RefObject, } from "react";
+import { FC, RefObject } from "react";
 
 import type { BoardProps } from "boardgame.io/react";
 import type { AmazonsState } from "./game";
-import { Queen } from "./queen";
-import { Square } from "./square";
+import { Queen } from "./tokens/queen";
+import { Square } from "./tokens/square";
 import { makeAndRunAnim, makeTransform } from "./util";
 
 export const Board: FC<BoardProps<AmazonsState>> = ({ ctx, G, moves }) => {
