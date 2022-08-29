@@ -28,9 +28,9 @@ export const Board: FC<BoardProps<AmazonsState>> = ({ ctx, G, moves }) => {
     return [];
   };
 
-  let pieces = amz.pieces();
-  let [arrows, setArrows] = useState(pieces["x"]!);
-  let [movable, setMovable] = useState<TSquare[]>(getMovable(amz));
+  const pieces = amz.pieces();
+  const [arrows, setArrows] = useState(pieces["x"]!);
+  const [movable, setMovable] = useState<TSquare[]>(getMovable(amz));
 
   let currElement: HTMLDivElement | null;
 
@@ -51,7 +51,7 @@ export const Board: FC<BoardProps<AmazonsState>> = ({ ctx, G, moves }) => {
   ) {
     if (token === "") {
       // square logic
-      makeAndRunAnim(currElement!, sq_or_id as TSquare, size);
+      // makeAndRunAnim(currElement!, sq_or_id as TSquare, size);
     } else if (token === "w" || token === "b") {
       // queen logic
       currElement = ref!.current;

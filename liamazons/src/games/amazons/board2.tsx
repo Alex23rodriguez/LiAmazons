@@ -35,7 +35,7 @@ export const Board2: FC<BoardProps<AmazonsState>> = ({ ctx, G, moves }) => {
       moves.move!(mymoves[movnum]);
       movnum++;
     } else {
-      makeAndRunAnim(c.current, mymoves[movnum]?.at(-1)!, size, () => {
+      makeAndRunAnim(c.current, mymoves[movnum]!.at(-1)!, size, () => {
         moves.move!(mymoves[movnum]);
         movnum++;
       });
