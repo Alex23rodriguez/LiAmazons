@@ -1,15 +1,21 @@
 import { Amazons, coords_to_square } from "amazons-game-engine";
-import { Move as TMove, Size } from "amazons-game-engine/dist/types";
+import {
+  Move as TMove,
+  Size,
+  Square as TSquare,
+} from "amazons-game-engine/dist/types";
 import { BoardProps } from "boardgame.io/dist/types/packages/react";
 import { FC } from "react";
 import { AmazonsState } from "./game";
+import { ArrowAnim } from "./tokens/anim_arrow";
 import { Arrow } from "./tokens/arrow";
 import { Queen } from "./tokens/queen";
 import { Square } from "./tokens/square";
-import { makeAndRunAnim, makeTransform } from "./util";
+import { makeAndRunAnim, makeTransform, shootAnim } from "./util";
 
 const mymoves: TMove[] = [["c1", "c4"], ["a6"], ["a4", "d1"], ["d5"]];
 let movnum = 0;
+let from: TSquare = "a1";
 
 export const Board2: FC<BoardProps<AmazonsState>> = ({ ctx, G, moves }) => {
   console.log("making board");
@@ -32,11 +38,14 @@ export const Board2: FC<BoardProps<AmazonsState>> = ({ ctx, G, moves }) => {
 
   function onClick(a: any, b: any, c?: any) {
     if (amz.shooting()) {
-      moves.move!(mymoves[movnum]);
-      movnum++;
+      shootAnim(from, mymoves[movnum]![0], size, () => {
+        moves.move!(mymoves[movnum]);
+        movnum++;
+      });
     } else {
       makeAndRunAnim(c.current, mymoves[movnum]!.at(-1)!, size, () => {
         moves.move!(mymoves[movnum]);
+        from = mymoves[movnum]![1]!;
         movnum++;
       });
     }
@@ -63,6 +72,7 @@ export const Board2: FC<BoardProps<AmazonsState>> = ({ ctx, G, moves }) => {
               />
             ))
       )}
+      <ArrowAnim size={square_size} />
 
       {square_names.map((sq) => (
         <Square

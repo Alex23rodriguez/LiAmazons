@@ -3,7 +3,6 @@ import { colorPalette } from "../settings";
 
 export const ArrowAnim: FC<{
   size: string;
-  initTransform: string;
 }> = (props) => (
   <div
     id={"arrow-anim"}
@@ -11,7 +10,7 @@ export const ArrowAnim: FC<{
     style={{
       width: props.size,
       height: props.size,
-      transform: props.initTransform,
+      display: "none",
     }}
   >
     <div

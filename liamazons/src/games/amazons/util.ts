@@ -31,3 +31,29 @@ export function makeAndRunAnim(
     callback();
   };
 }
+
+export function shootAnim(
+  from: Square,
+  to: Square,
+  size: Size,
+  callback: () => void
+) {
+  const el = document.getElementById("arrow-anim") as HTMLDivElement;
+  const transformStrFrom = makeTransform(from, size);
+  const transformStrTo = makeTransform(to, size);
+
+  el.style.transform = transformStrFrom;
+  el.style.display = "";
+
+  el.animate(
+    { transform: transformStrTo },
+    {
+      duration: 250,
+      easing: "ease-in-out",
+    }
+  ).onfinish = () => {
+    el.style.transform = transformStrTo;
+    callback();
+    // el.style.display = "none";
+  };
+}
