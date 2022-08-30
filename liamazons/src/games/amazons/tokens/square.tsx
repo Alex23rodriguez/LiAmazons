@@ -2,7 +2,7 @@ import { Square as TSquare } from "amazons-game-engine/dist/types";
 import { FC } from "react";
 import { colorPalette } from "../settings";
 import { Arrow } from "./arrow";
-import { Mover } from "./mover";
+import { Mover } from "./movable";
 
 export const Square: FC<{
   square: TSquare;
