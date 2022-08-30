@@ -5,7 +5,7 @@ import { Lobby } from "boardgame.io/react";
 import { TicTacToeGame as TicTacToe } from "../games/tictactoe/game";
 import { Board as TicTacToeBoard } from "../games/tictactoe/board";
 import { AmazonsGame as Amazons } from "../games/amazons/game";
-import { Board as AmazonsBoard } from "../games/amazons/board";
+import { Page as AmazonsBoard } from "../games/amazons/page";
 import { clientEnv } from "../env/schema.mjs";
 // import { TicTacToe } from "@/games/tictactoe/game";
 // import { TicTacToeBoard } from "@/games/tictactoe/board";
