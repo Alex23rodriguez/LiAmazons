@@ -4,7 +4,7 @@ import {
   Square as TSquare,
 } from "amazons-game-engine/dist/types";
 import { BoardProps } from "boardgame.io/dist/types/packages/react";
-import { FC, RefObject, useEffect, useRef, useState } from "react";
+import { FC, RefObject, useEffect, useRef } from "react";
 import { AmazonsState } from "./game";
 import { ArrowAnim } from "./tokens/anim_arrow";
 import { Queen } from "./tokens/queen";
@@ -15,8 +15,6 @@ const mymoves: TMove[] = [["c1", "c4"], ["a6"], ["a4", "d1"], ["d5"]];
 let movnum = 0;
 let from: TSquare = "a1";
 
-export const amz = Amazons();
-
 export const Board2: FC<BoardProps<AmazonsState>> = ({
   ctx,
   G,
@@ -24,16 +22,13 @@ export const Board2: FC<BoardProps<AmazonsState>> = ({
   ...boardProps
 }) => {
   console.log("making board");
-  amz.load(G.fen);
+  const amz = Amazons(G.fen);
   const size = amz.size();
   const { rows, cols } = size;
-
-  let [pieces, setPieces] = useState(amz.pieces());
 
   if (global.window) {
     (window as any).amz = amz;
     (window as any).board = boardProps;
-    (window as any).pieces = pieces;
   }
 
   const transformFn = makeTransformFunction(amz);
@@ -42,6 +37,7 @@ export const Board2: FC<BoardProps<AmazonsState>> = ({
     amz.index_to_square(i)
   );
 
+  const pieces = amz.pieces();
   const myRefs: {
     w: RefObject<HTMLDivElement>[];
     b: RefObject<HTMLDivElement>[];
@@ -65,24 +61,19 @@ export const Board2: FC<BoardProps<AmazonsState>> = ({
   function onClick(a: any, b: any) {
     console.log(a, b);
     if (amz.shooting()) {
-      shootAnim(from, mymoves[movnum]![0], transformFn, () => {
-        amz.move(mymoves[movnum]!);
-        setPieces(amz.pieces());
+      shootAnim(from, mymoves[movnum]![0], amz, () => {
         moves.move!(mymoves[movnum]);
         movnum++;
       });
     } else {
-      amz.move(mymoves[movnum]!);
-      moves.move!(mymoves[movnum]);
-
       makeAndRunAnim(
-        myRefs[a as "w" | "b"][b]!.current!,
+        myRefs[a][b].current,
         mymoves[movnum]!.at(-1)!,
-        transformFn,
+        amz,
         () => {
+          moves.move!(mymoves[movnum]);
           from = mymoves[movnum]![1]!;
           movnum++;
-          setPieces(amz.pieces());
         }
       );
     }
@@ -115,7 +106,7 @@ export const Board2: FC<BoardProps<AmazonsState>> = ({
       {square_names.map((sq) => (
         <Square
           key={sq}
-          token={pieces["x"].includes(sq) ? "x" : ""}
+          token={pieces["x"]!.includes(sq) ? "x" : ""}
           shooting={amz.shooting()}
           square={sq}
           color={amz.square_color(sq)}

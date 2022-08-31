@@ -19,10 +19,10 @@ export function makeTransformFunction(amz: any) {
 export function makeAndRunAnim(
   el: HTMLDivElement,
   sq: Square,
-  transformFn: (sq: Square) => string,
+  amz: any,
   callback: () => void
 ) {
-  const transformStr = transformFn(sq);
+  const transformStr = makeTransform(sq, amz);
 
   el.animate(
     {
@@ -41,12 +41,12 @@ export function makeAndRunAnim(
 export function shootAnim(
   from: Square,
   to: Square,
-  transformFn: (sq: Square) => string,
+  amz: any,
   callback: () => void
 ) {
   const el = document.getElementById("arrow-anim") as HTMLDivElement;
-  const transformStrFrom = transformFn(from);
-  const transformStrTo = transformFn(to);
+  const transformStrFrom = makeTransform(from, amz);
+  const transformStrTo = makeTransform(to, amz);
 
   el.style.transform = transformStrFrom;
   el.style.display = "";
