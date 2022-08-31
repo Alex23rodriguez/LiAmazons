@@ -17,7 +17,7 @@ export const Queen = forwardRef<
     <div
       ref={ref}
       onClick={() => props.onClick(props.team, props.id)}
-      className="absolute z-20 grid place-items-center"
+      className="absolute z-30 grid place-items-center"
       style={{
         width: props.size,
         height: props.size,
