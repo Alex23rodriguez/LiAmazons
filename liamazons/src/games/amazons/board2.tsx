@@ -4,7 +4,7 @@ import {
   Square as TSquare,
 } from "amazons-game-engine/dist/types";
 import { BoardProps } from "boardgame.io/dist/types/packages/react";
-import { FC } from "react";
+import { FC, RefObject, useEffect, useRef } from "react";
 import { AmazonsState } from "./game";
 import { ArrowAnim } from "./tokens/anim_arrow";
 import { Queen } from "./tokens/queen";
@@ -32,22 +32,44 @@ export const Board2: FC<BoardProps<AmazonsState>> = ({ ctx, G, moves }) => {
   );
 
   const pieces = amz.pieces();
+  const myRefs: {
+    w: RefObject<HTMLDivElement>[];
+    b: RefObject<HTMLDivElement>[];
+  } = {
+    w: pieces["w"].map(() => useRef<HTMLDivElement>(null)),
+    b: pieces["b"].map(() => useRef<HTMLDivElement>(null)),
+  };
+
+  let teams: ["w", "b"] = ["w", "b"];
+  for (let team of teams) {
+    for (let i in pieces[team]) {
+      let ref = myRefs[team][i]!;
+      if (ref.current)
+        ref.current.style.transform = transformFn(pieces[team][i]!);
+    }
+  }
 
   const board_size = "min(80vh, 80vw)";
   const square_size = `calc(${board_size} / ${cols})`;
 
-  function onClick(a: any, b: any, c?: any) {
+  function onClick(a: any, b: any) {
+    console.log(a, b);
     if (amz.shooting()) {
       shootAnim(from, mymoves[movnum]![0], amz, () => {
         moves.move!(mymoves[movnum]);
         movnum++;
       });
     } else {
-      makeAndRunAnim(c.current, mymoves[movnum]!.at(-1)!, amz, () => {
-        moves.move!(mymoves[movnum]);
-        from = mymoves[movnum]![1]!;
-        movnum++;
-      });
+      makeAndRunAnim(
+        myRefs[a][b].current,
+        mymoves[movnum]!.at(-1)!,
+        amz,
+        () => {
+          moves.move!(mymoves[movnum]);
+          from = mymoves[movnum]![1]!;
+          movnum++;
+        }
+      );
     }
   }
 
@@ -62,6 +84,8 @@ export const Board2: FC<BoardProps<AmazonsState>> = ({ ctx, G, moves }) => {
           ? null
           : sq_array.map((sq, i) => (
               <Queen
+                ref={myRefs[piece as "w" | "b"][i]!}
+                id={i}
                 key={piece + i}
                 square={sq}
                 team={piece as "w" | "b"}
