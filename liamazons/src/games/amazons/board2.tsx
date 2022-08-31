@@ -15,7 +15,12 @@ const mymoves: TMove[] = [["c1", "c4"], ["a6"], ["a4", "d1"], ["d5"]];
 let movnum = 0;
 let from: TSquare = "a1";
 
-export const Board2: FC<BoardProps<AmazonsState>> = ({ ctx, G, moves }) => {
+export const Board2: FC<BoardProps<AmazonsState>> = ({
+  ctx,
+  G,
+  moves,
+  ...boardProps
+}) => {
   console.log("making board");
   const amz = Amazons(G.fen);
   const size = amz.size();
@@ -23,6 +28,7 @@ export const Board2: FC<BoardProps<AmazonsState>> = ({ ctx, G, moves }) => {
 
   if (global.window) {
     (window as any).amz = amz;
+    (window as any).board = boardProps;
   }
 
   const transformFn = makeTransformFunction(amz);

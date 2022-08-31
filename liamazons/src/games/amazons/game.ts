@@ -13,6 +13,7 @@ export interface SetupData {
 function Load(fen: FEN) {
   return Amazons(fen);
 }
+
 export const AmazonsGame: Game<AmazonsState> = {
   name: "amazons",
 
@@ -37,7 +38,10 @@ export const AmazonsGame: Game<AmazonsState> = {
         return { ...G };
       }
       console.log(m);
-      amazons.move(m);
+      const success = amazons.move(m);
+      if (!success) {
+        console.error("move was invalid!");
+      }
       console.log(amazons.fen());
       return { fen: amazons.fen(), last_move: m };
     }) as MoveFn<AmazonsState>,
