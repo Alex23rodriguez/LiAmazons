@@ -1,4 +1,4 @@
-import { Amazons, coords_to_square } from "amazons-game-engine";
+import { Amazons } from "amazons-game-engine";
 import {
   Move as TMove,
   Size,
@@ -8,7 +8,6 @@ import { BoardProps } from "boardgame.io/dist/types/packages/react";
 import { FC } from "react";
 import { AmazonsState } from "./game";
 import { ArrowAnim } from "./tokens/anim_arrow";
-import { Arrow } from "./tokens/arrow";
 import { Queen } from "./tokens/queen";
 import { Square } from "./tokens/square";
 import { makeAndRunAnim, makeTransform, shootAnim } from "./util";
@@ -28,7 +27,7 @@ export const Board2: FC<BoardProps<AmazonsState>> = ({ ctx, G, moves }) => {
   }
 
   const square_names = Array.from({ length: cols * rows }, (_, i) =>
-    index_to_square(i, size)
+    amz.index_to_square(i)
   );
 
   const pieces = amz.pieces();
@@ -38,12 +37,12 @@ export const Board2: FC<BoardProps<AmazonsState>> = ({ ctx, G, moves }) => {
 
   function onClick(a: any, b: any, c?: any) {
     if (amz.shooting()) {
-      shootAnim(from, mymoves[movnum]![0], size, () => {
+      shootAnim(from, mymoves[movnum]![0], amz, () => {
         moves.move!(mymoves[movnum]);
         movnum++;
       });
     } else {
-      makeAndRunAnim(c.current, mymoves[movnum]!.at(-1)!, size, () => {
+      makeAndRunAnim(c.current, mymoves[movnum]!.at(-1)!, amz, () => {
         moves.move!(mymoves[movnum]);
         from = mymoves[movnum]![1]!;
         movnum++;
@@ -65,7 +64,7 @@ export const Board2: FC<BoardProps<AmazonsState>> = ({ ctx, G, moves }) => {
                 queenId={i}
                 key={i}
                 square={sq}
-                initTransform={makeTransform(sq, size)}
+                initTransform={makeTransform(sq, amz)}
                 team={piece as "w" | "b"}
                 size={square_size}
                 onClick={onClick}
@@ -88,13 +87,3 @@ export const Board2: FC<BoardProps<AmazonsState>> = ({ ctx, G, moves }) => {
     </div>
   );
 };
-
-function index_to_square(index: number, size: Size) {
-  return coords_to_square(
-    {
-      row: Math.floor(index / size.cols),
-      col: index % size.cols,
-    },
-    size
-  );
-}
