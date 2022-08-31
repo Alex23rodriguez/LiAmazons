@@ -1,7 +1,6 @@
 import { Amazons } from "amazons-game-engine";
 import {
   Move as TMove,
-  Size,
   Square as TSquare,
 } from "amazons-game-engine/dist/types";
 import { BoardProps } from "boardgame.io/dist/types/packages/react";
@@ -10,7 +9,7 @@ import { AmazonsState } from "./game";
 import { ArrowAnim } from "./tokens/anim_arrow";
 import { Queen } from "./tokens/queen";
 import { Square } from "./tokens/square";
-import { makeAndRunAnim, makeTransform, shootAnim } from "./util";
+import { makeAndRunAnim, makeTransformFunction, shootAnim } from "./util";
 
 const mymoves: TMove[] = [["c1", "c4"], ["a6"], ["a4", "d1"], ["d5"]];
 let movnum = 0;
@@ -25,6 +24,8 @@ export const Board2: FC<BoardProps<AmazonsState>> = ({ ctx, G, moves }) => {
   if (global.window) {
     (window as any).amz = amz;
   }
+
+  const transformFn = makeTransformFunction(amz);
 
   const square_names = Array.from({ length: cols * rows }, (_, i) =>
     amz.index_to_square(i)
@@ -61,13 +62,12 @@ export const Board2: FC<BoardProps<AmazonsState>> = ({ ctx, G, moves }) => {
           ? null
           : sq_array.map((sq, i) => (
               <Queen
-                queenId={i}
-                key={i}
+                key={piece + i}
                 square={sq}
-                initTransform={makeTransform(sq, amz)}
                 team={piece as "w" | "b"}
                 size={square_size}
                 onClick={onClick}
+                transformFn={transformFn}
               />
             ))
       )}

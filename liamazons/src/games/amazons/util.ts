@@ -12,6 +12,10 @@ export function makeTransform(sq: Square, amz: any) {
   return ans;
 }
 
+export function makeTransformFunction(amz: any) {
+  return (sq: Square) => makeTransform(sq, amz);
+}
+
 export function makeAndRunAnim(
   el: HTMLDivElement,
   sq: Square,

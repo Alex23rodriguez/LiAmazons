@@ -3,23 +3,22 @@ import { FC, MutableRefObject, RefObject, useRef } from "react";
 import { colorPalette } from "../settings";
 
 export const Queen: FC<{
-  queenId: number;
   square: TSquare;
   team: string;
   size: string;
-  onClick: (token: string, id: number, ref: RefObject<HTMLDivElement>) => void;
-  initTransform: string;
+  onClick: (token: string, sq: TSquare, ref: RefObject<HTMLDivElement>) => void;
+  transformFn: (sq: TSquare) => string;
 }> = (props) => {
   const ref = useRef<HTMLDivElement>(null);
   return (
     <div
       ref={ref}
-      onClick={() => props.onClick(props.team, props.queenId, ref)}
+      onClick={() => props.onClick(props.team, props.square, ref)}
       className="absolute z-20 grid place-items-center"
       style={{
         width: props.size,
         height: props.size,
-        transform: props.initTransform,
+        transform: props.transformFn(props.square),
       }}
     >
       <div
