@@ -4,16 +4,19 @@ import {
   Square as TSquare,
 } from "amazons-game-engine/dist/types";
 import { BoardProps } from "boardgame.io/dist/types/packages/react";
-import { FC, RefObject, useEffect, useRef } from "react";
+import { FC, RefObject, useEffect, useMemo, useRef } from "react";
 import { AmazonsState } from "./game";
 import { ArrowAnim } from "./tokens/anim_arrow";
 import { Queen } from "./tokens/queen";
 import { Square } from "./tokens/square";
 import { makeAndRunAnim, makeTransformFunction, shootAnim } from "./util";
+import { atom, useAtom, useAtomValue } from "jotai";
 
 const mymoves: TMove[] = [["c1", "c4"], ["a6"], ["a4", "d1"], ["d5"]];
 let movnum = 0;
 let from: TSquare = "a1";
+
+export const amazonsAtom = atom(Amazons());
 
 export const Board2: FC<BoardProps<AmazonsState>> = ({
   ctx,
@@ -21,8 +24,11 @@ export const Board2: FC<BoardProps<AmazonsState>> = ({
   moves,
   ...boardProps
 }) => {
-  console.log("making board");
-  const amz = Amazons(G.fen);
+  console.log("rendering board!");
+  const amz = useAtomValue(amazonsAtom);
+
+  amz.load(G.fen);
+
   const size = amz.size();
   const { rows, cols } = size;
 
@@ -66,12 +72,12 @@ export const Board2: FC<BoardProps<AmazonsState>> = ({
         movnum++;
       });
     } else {
+      moves.move!(mymoves[movnum]);
       makeAndRunAnim(
         myRefs[a][b].current,
         mymoves[movnum]!.at(-1)!,
         amz,
         () => {
-          moves.move!(mymoves[movnum]);
           from = mymoves[movnum]![1]!;
           movnum++;
         }
