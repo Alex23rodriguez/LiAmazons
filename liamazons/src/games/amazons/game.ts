@@ -12,7 +12,7 @@ export interface SetupData {
 }
 
 function Load(fen: FEN) {
-  return Amazons(fen);
+  return Amazons(fen, false); // unsafe loading
 }
 
 export const AmazonsGame: Game<AmazonsState> = {
@@ -22,6 +22,7 @@ export const AmazonsGame: Game<AmazonsState> = {
   maxPlayers: 2,
 
   setup: (_, setupData: SetupData) => {
+    // TODO: be careful not to give this an invalid fen! maybe return default if so
     if (setupData?.fen) {
       return { fen: setupData.fen };
     }
