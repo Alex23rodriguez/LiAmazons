@@ -1,7 +1,15 @@
 import { Amazons } from "amazons-game-engine";
 import { Square as TSquare } from "amazons-game-engine/dist/types";
 import { BoardProps } from "boardgame.io/dist/types/packages/react";
-import { createRef, FC, RefObject, useCallback, useRef, useState } from "react";
+import {
+  createRef,
+  FC,
+  RefObject,
+  useCallback,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { AmazonsState } from "./game";
 import { ArrowAnim } from "./tokens/anim_arrow";
 import { Queen } from "./tokens/queen";
@@ -24,8 +32,14 @@ export const Board: FC<BoardProps<AmazonsState>> = ({
 
   const [selectedSq, setSelectedSq] = useState<TSquare | null>(null);
   const [selectedQ, setSelectedQ] = useState<["b" | "w", number] | null>(null);
-  const [movable, setMovable] = useState(
-    amz.shooting() ? (amz.moves().flat() as TSquare[]) : []
+  const movable = useMemo(
+    () =>
+      amz.shooting()
+        ? (amz.moves().flat() as TSquare[])
+        : amz.moves_dict()[selectedSq!]
+        ? amz.moves_dict()[selectedSq!]!
+        : [],
+    [amz.shooting_sq(), selectedSq]
   );
 
   if (global.window) {
@@ -66,6 +80,7 @@ export const Board: FC<BoardProps<AmazonsState>> = ({
   });
   // end queen refs declaration
 
+  // board dimensions
   const board_size = "min(80vh, 80vw)";
   const square_size = `calc(${board_size} / ${cols})`;
 
@@ -95,7 +110,6 @@ export const Board: FC<BoardProps<AmazonsState>> = ({
 
       if (poss_moves) {
         setSelectedSq(sq);
-        setMovable(poss_moves);
       } else {
         console.error("no moves was not supposed to happen");
       }
@@ -113,7 +127,6 @@ export const Board: FC<BoardProps<AmazonsState>> = ({
         transformFn,
         () => {
           amz.move([selectedSq!, sq]);
-          setMovable(amz.moves().flat() as TSquare[]);
           setSelectedSq(sq);
           moves.move!([selectedSq, sq]);
         }
@@ -122,13 +135,11 @@ export const Board: FC<BoardProps<AmazonsState>> = ({
     } else if (selectedQ) {
       unselect();
     }
-
-    console.log("some other sht happened");
   };
+
   function unselect() {
     setSelectedSq(null);
     setSelectedQ(null);
-    setMovable([]);
   }
 
   return (
