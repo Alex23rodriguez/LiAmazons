@@ -14,7 +14,7 @@ export const Board2: FC<BoardProps<AmazonsState>> = ({
   moves,
   ...boardProps
 }) => {
-  console.log("making board");
+  // console.log("making board");
   const amz = Amazons(G.fen);
   const size = amz.size();
   const { rows, cols } = size;
@@ -31,6 +31,8 @@ export const Board2: FC<BoardProps<AmazonsState>> = ({
   if (global.window) {
     (window as any).amz = amz;
     (window as any).board = boardProps;
+    (window as any).G = G;
+    (window as any).ctx = ctx;
     (window as any).forceUpdate = forceUpdate;
   }
 
@@ -68,8 +70,7 @@ export const Board2: FC<BoardProps<AmazonsState>> = ({
       if (movable.includes(sq) && selectedSq) {
         // playing it safe
         shootAnim(selectedSq, sq, transformFn, () => {
-          setMovable([]);
-          setSelectedSq(null);
+          unselect();
           moves.move!([sq]);
         });
       }
@@ -108,12 +109,12 @@ export const Board2: FC<BoardProps<AmazonsState>> = ({
       });
       return;
     } else if (selectedQ) {
-      unselectQueen();
+      unselect();
     }
 
     console.log("some other sht happened");
   };
-  function unselectQueen() {
+  function unselect() {
     setSelectedSq(null);
     setSelectedQ(null);
     setMovable([]);
