@@ -6,6 +6,7 @@ import {
   FC,
   RefObject,
   useCallback,
+  useEffect,
   useMemo,
   useRef,
   useState,
@@ -22,7 +23,6 @@ export const Board: FC<BoardProps<AmazonsState>> = ({
   moves,
   ...boardProps
 }) => {
-  console.log("making board");
   const amz = Amazons(G.fen);
   const size = amz.size();
   const { rows, cols } = size;
@@ -49,10 +49,21 @@ export const Board: FC<BoardProps<AmazonsState>> = ({
     (window as any).ctx = ctx;
     (window as any).forceUpdate = forceUpdate;
   }
+  useEffect(() => {
+    if (amz.shooting() && amz.shooting_sq() !== selectedSq) {
+      setSelectedSq(amz.shooting_sq());
+      return;
+    }
+
+    if (selectedSq) {
+      if (!amz.moves_dict()[selectedSq]) {
+        setSelectedSq(null);
+      }
+    }
+  }, [amz.fen()]);
 
   const transformFn = makeTransformFunction(amz);
 
-  console.log(rows, cols);
   const squares_static: [TSquare, "dark" | "light"][] = useMemo(
     () =>
       Array.from({ length: cols * rows }, (_, i) => {
@@ -106,7 +117,7 @@ export const Board: FC<BoardProps<AmazonsState>> = ({
 
     if (token === amz.turn() && sq != selectedSq) {
       // select a queen
-      const poss_moves = amz.moves_dict()[sq]; //playing it safe
+      const poss_moves = amz.moves_dict()[sq];
 
       const queenId = pieces[token].indexOf(sq);
       if (queenId === -1) {
@@ -115,6 +126,7 @@ export const Board: FC<BoardProps<AmazonsState>> = ({
       setSelectedQ([token, queenId]);
 
       if (poss_moves) {
+        //playing it safe
         setSelectedSq(sq);
       } else {
         console.error("no moves was not supposed to happen");
@@ -133,7 +145,7 @@ export const Board: FC<BoardProps<AmazonsState>> = ({
         transformFn,
         () => {
           amz.move([selectedSq!, sq]);
-          setSelectedSq(sq);
+          // setSelectedSq(sq);
           moves.move!([selectedSq, sq]);
         }
       );
