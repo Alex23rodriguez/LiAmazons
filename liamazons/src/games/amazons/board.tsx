@@ -7,6 +7,7 @@ import {
   RefObject,
   useCallback,
   useEffect,
+  useLayoutEffect,
   useMemo,
   useRef,
   useState,
@@ -17,7 +18,11 @@ import { Queen } from "./tokens/queen";
 import { Square } from "./tokens/square";
 import { makeAndRunAnim, makeTransformFunction, shootAnim } from "./util";
 
-let animating = true;
+let animating: TSquare | null = null;
+
+if (global.window) {
+  (window as any).animating = animating;
+}
 
 export const Board: FC<BoardProps<AmazonsState>> = ({
   ctx,
@@ -44,6 +49,13 @@ export const Board: FC<BoardProps<AmazonsState>> = ({
     [amz.shooting_sq(), selectedSq]
   );
 
+  if (global.window) {
+    (window as any).amz = amz;
+    (window as any).board = boardProps;
+    (window as any).G = G;
+    (window as any).ctx = ctx;
+    (window as any).forceUpdate = forceUpdate;
+  }
   useEffect(() => {
     if (amz.shooting() && amz.shooting_sq() !== selectedSq) {
       setSelectedSq(amz.shooting_sq());
@@ -76,25 +88,34 @@ export const Board: FC<BoardProps<AmazonsState>> = ({
     b: useRef<RefObject<HTMLDivElement>[]>([]),
   };
 
-  queenRefs.w.current = pieces.w.map((sq, i) => {
-    if (queenRefs.w.current[i]) {
-      queenRefs.w.current[i]!.current!.style.transform = transformFn(sq);
-      return queenRefs.w.current[i]!;
-    }
-    console.log("creating black queen ref");
+  queenRefs.w.current = pieces.w.map(
+    (_, i) => queenRefs.w.current[i] ?? createRef<HTMLDivElement>()
+  );
+  queenRefs.b.current = pieces.b.map(
+    (_, i) => queenRefs.b.current[i] ?? createRef<HTMLDivElement>()
+  );
 
-    return createRef<HTMLDivElement>();
-  });
-  queenRefs.b.current = pieces.b.map((sq, i) => {
-    if (queenRefs.b.current[i]) {
-      queenRefs.b.current[i]!.current!.style.transform = transformFn(sq);
-      return queenRefs.b.current[i]!;
-    }
-    console.log("creating black queen ref");
-
-    return createRef<HTMLDivElement>();
-  });
+  useLayoutEffect(() => {
+    compareSquares();
+  }, []);
   // end queen refs declaration
+
+  compareSquares();
+
+  function compareSquares() {
+    if (animating) {
+      return;
+    }
+    for (const team of ["b", "w"] as ["b", "w"]) {
+      queenRefs[team].current.forEach((el, index) => {
+        if (!el.current) return;
+        const correct = transformFn(pieces[team][index]!);
+        if (el.current.style.transform !== correct) {
+          el.current.style.transform = transformFn(pieces[team][index]!);
+        }
+      });
+    }
+  }
 
   // board dimensions
   const board_size = "min(80vh, 80vw)";
@@ -104,11 +125,13 @@ export const Board: FC<BoardProps<AmazonsState>> = ({
     if (ctx.gameover) return;
     if (amz.shooting()) {
       // place an arrow
+      animating = sq;
+      moves.move!([sq]);
       if (movable.includes(sq) && selectedSq) {
         // playing it safe
         shootAnim(selectedSq, sq, transformFn, () => {
+          animating = null;
           unselect();
-          moves.move!([sq]);
         });
       }
       return;
@@ -138,16 +161,21 @@ export const Board: FC<BoardProps<AmazonsState>> = ({
 
       const [team, id] = selectedQ!;
 
-      animating = true;
+      animating = sq;
+      if (global.window) {
+        (window as any).animating = animating;
+      }
       amz.move([selectedSq!, sq]);
       moves.move!([selectedSq, sq]);
-
       makeAndRunAnim(
         queenRefs[team].current[id]!.current!,
         sq,
         transformFn,
         () => {
-          animating = false;
+          animating = null;
+          if (global.window) {
+            (window as any).animating = animating;
+          }
         }
       );
       return;
@@ -161,13 +189,10 @@ export const Board: FC<BoardProps<AmazonsState>> = ({
     setSelectedQ(null);
   }
 
-  if (global.window) {
-    (window as any).amz = amz;
-    (window as any).board = boardProps;
-    (window as any).G = G;
-    (window as any).ctx = ctx;
-    (window as any).forceUpdate = forceUpdate;
-    (window as any).onClick = onClick;
+  function getToken(sq: TSquare) {
+    if (movable.includes(sq)) return "m";
+    if (animating !== sq && pieces.x.includes(sq)) return "x";
+    return "";
   }
 
   return (
@@ -176,30 +201,26 @@ export const Board: FC<BoardProps<AmazonsState>> = ({
       className="select-none grid grid-cols-6"
       style={{ width: board_size }}
     >
-      {Object.entries(pieces).map(([piece, sq_array]) =>
-        piece === "x"
-          ? null
-          : sq_array.map((sq, i) => (
-              <Queen
-                ref={queenRefs[piece as "w" | "b"].current[i]}
-                key={piece + i}
-                square={sq}
-                team={piece as "w" | "b"}
-                size={square_size}
-                onClick={onClick}
-                // transformFn={transformFn}
-                // initTransform={transformFn(sq)}
-              />
-            ))
+      {Object.entries(pieces).map(
+        ([piece, sq_array]) =>
+          piece !== "x" &&
+          sq_array.map((sq, i) => (
+            <Queen
+              ref={queenRefs[piece as "w" | "b"].current[i]}
+              key={piece + i}
+              square={sq}
+              team={piece as "w" | "b"}
+              size={square_size}
+              onClick={onClick}
+            />
+          ))
       )}
       <ArrowAnim size={square_size} />
 
       {squares_static.map(([sq, color]) => (
         <Square
           key={sq}
-          token={
-            pieces["x"]!.includes(sq) ? "x" : movable.includes(sq) ? "m" : ""
-          }
+          token={getToken(sq)}
           shooting={amz.shooting()}
           square={sq}
           color={color}
