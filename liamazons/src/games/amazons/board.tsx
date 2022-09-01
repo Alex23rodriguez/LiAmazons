@@ -22,7 +22,7 @@ export const Board: FC<BoardProps<AmazonsState>> = ({
   moves,
   ...boardProps
 }) => {
-  // console.log("making board");
+  console.log("making board");
   const amz = Amazons(G.fen);
   const size = amz.size();
   const { rows, cols } = size;
@@ -52,8 +52,14 @@ export const Board: FC<BoardProps<AmazonsState>> = ({
 
   const transformFn = makeTransformFunction(amz);
 
-  const square_names = Array.from({ length: cols * rows }, (_, i) =>
-    amz.index_to_square(i)
+  console.log(rows, cols);
+  const squares_static: [TSquare, "dark" | "light"][] = useMemo(
+    () =>
+      Array.from({ length: cols * rows }, (_, i) => {
+        const sq = amz.index_to_square(i);
+        return [sq, amz.square_color(sq)];
+      }),
+    [rows, cols]
   );
 
   const pieces = amz.pieces();
@@ -165,7 +171,7 @@ export const Board: FC<BoardProps<AmazonsState>> = ({
       )}
       <ArrowAnim size={square_size} />
 
-      {square_names.map((sq) => (
+      {squares_static.map(([sq, color]) => (
         <Square
           key={sq}
           token={
@@ -173,7 +179,7 @@ export const Board: FC<BoardProps<AmazonsState>> = ({
           }
           shooting={amz.shooting()}
           square={sq}
-          color={amz.square_color(sq)}
+          color={color}
           onClick={onClick}
           selected={false}
         />
