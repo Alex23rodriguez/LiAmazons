@@ -3,7 +3,7 @@ import { Square } from "amazons-game-engine/dist/types";
 
 // TODO: make a type from AmazonsAPI
 
-export function makeTransform(sq: Square, amz: any) {
+function makeTransform(sq: Square, amz: any) {
   const { row, col } = amz.square_to_coords(sq);
 
   const ans = `translate3d(${col === 0 ? "0" : col + "00%"}, ${
@@ -19,10 +19,10 @@ export function makeTransformFunction(amz: any) {
 export function makeAndRunAnim(
   el: HTMLDivElement,
   sq: Square,
-  amz: any,
+  transformFn: (sq: Square) => string,
   callback: () => void
 ) {
-  const transformStr = makeTransform(sq, amz);
+  const transformStr = transformFn(sq);
 
   el.animate(
     {
@@ -41,12 +41,12 @@ export function makeAndRunAnim(
 export function shootAnim(
   from: Square,
   to: Square,
-  amz: any,
+  transformFn: (sq: Square) => string,
   callback: () => void
 ) {
   const el = document.getElementById("arrow-anim") as HTMLDivElement;
-  const transformStrFrom = makeTransform(from, amz);
-  const transformStrTo = makeTransform(to, amz);
+  const transformStrFrom = transformFn(from);
+  const transformStrTo = transformFn(to);
 
   el.style.transform = transformStrFrom;
   el.style.display = "";
