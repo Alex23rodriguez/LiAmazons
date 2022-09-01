@@ -8,7 +8,7 @@ import { Queen } from "./tokens/queen";
 import { Square } from "./tokens/square";
 import { makeAndRunAnim, makeTransformFunction, shootAnim } from "./util";
 
-export const Board2: FC<BoardProps<AmazonsState>> = ({
+export const Board: FC<BoardProps<AmazonsState>> = ({
   ctx,
   G,
   moves,
