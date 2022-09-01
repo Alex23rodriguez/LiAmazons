@@ -16,7 +16,12 @@ import { AmazonsState } from "./game";
 import { ArrowAnim } from "./tokens/anim_arrow";
 import { Queen } from "./tokens/queen";
 import { Square } from "./tokens/square";
-import { makeAndRunAnim, makeTransformFunction, shootAnim } from "./util";
+import {
+  makeAndRunAnim,
+  makeBasicAnim,
+  makeTransformFunction,
+  shootAnim,
+} from "./util";
 
 let animating: TSquare | null = null;
 
@@ -49,13 +54,6 @@ export const Board: FC<BoardProps<AmazonsState>> = ({
     [amz.shooting_sq(), selectedSq]
   );
 
-  if (global.window) {
-    (window as any).amz = amz;
-    (window as any).board = boardProps;
-    (window as any).G = G;
-    (window as any).ctx = ctx;
-    (window as any).forceUpdate = forceUpdate;
-  }
   useEffect(() => {
     if (amz.shooting() && amz.shooting_sq() !== selectedSq) {
       setSelectedSq(amz.shooting_sq());
@@ -111,7 +109,8 @@ export const Board: FC<BoardProps<AmazonsState>> = ({
         if (!el.current) return;
         const correct = transformFn(pieces[team][index]!);
         if (el.current.style.transform !== correct) {
-          el.current.style.transform = transformFn(pieces[team][index]!);
+          // el.current.style.transform = transformFn(pieces[team][index]!);
+          makeBasicAnim(el.current, correct);
         }
       });
     }
@@ -192,6 +191,15 @@ export const Board: FC<BoardProps<AmazonsState>> = ({
     if (movable.includes(sq)) return "m";
     if (animating !== sq && pieces.x.includes(sq)) return "x";
     return "";
+  }
+
+  if (global.window) {
+    (window as any).amz = amz;
+    (window as any).board = boardProps;
+    (window as any).G = G;
+    (window as any).ctx = ctx;
+    (window as any).forceUpdate = forceUpdate;
+    (window as any).queenRefs = queenRefs;
   }
 
   return (
