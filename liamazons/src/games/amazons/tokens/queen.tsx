@@ -1,8 +1,8 @@
 import type { Square as TSquare } from "amazons-game-engine/dist/types";
-import { FC, RefObject, forwardRef, ForwardedRef } from "react";
+import { forwardRef } from "react";
 import { colorPalette } from "../settings";
 
-export const Queen = forwardRef<
+const Queen = forwardRef<
   HTMLDivElement,
   {
     square: TSquare;
@@ -31,3 +31,6 @@ export const Queen = forwardRef<
     </div>
   );
 });
+Queen.displayName = "Queen";
+
+export { Queen };
