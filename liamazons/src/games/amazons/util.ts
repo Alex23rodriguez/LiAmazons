@@ -6,9 +6,9 @@ import { Square } from "amazons-game-engine/dist/types";
 function makeTransform(sq: Square, amz: any) {
   const { row, col } = amz.square_to_coords(sq);
 
-  const ans = `translate3d(${col === 0 ? "0" : col + "00%"}, ${
-    row === 0 ? "0" : row + "00%"
-  }, 0)`;
+  const ans = `translate3d(${col === 0 ? "0px" : col + "00%"}, ${
+    row === 0 ? "0px" : row + "00%"
+  }, 0px)`;
   return ans;
 }
 
