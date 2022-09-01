@@ -62,16 +62,15 @@ export const Board2: FC<BoardProps<AmazonsState>> = ({
   const board_size = "min(80vh, 80vw)";
   const square_size = `calc(${board_size} / ${cols})`;
 
-  function onClick(a: any, b: any) {
-    console.log(a, b);
+  function onClick(token: string, id: TSquare | number) {
     if (amz.shooting()) {
       shootAnim(from, mymoves[movnum]![0], amz, () => {
         moves.move!(mymoves[movnum]);
         movnum++;
       });
-    } else {
+    } else if (typeof id === "number" && (token === "w" || token === "b")) {
       makeAndRunAnim(
-        myRefs[a][b].current,
+        myRefs[token][id]!.current!,
         mymoves[movnum]!.at(-1)!,
         amz,
         () => {
