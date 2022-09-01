@@ -1,3 +1,4 @@
+import { INVALID_MOVE } from "boardgame.io/core";
 import { Amazons, DEFAULT_POSITIONS } from "amazons-game-engine";
 
 import type { Game, MoveFn, MoveMap, TurnConfig } from "boardgame.io";
@@ -34,15 +35,14 @@ export const AmazonsGame: Game<AmazonsState> = {
         (amazons.turn() == "w" && ctx.currentPlayer == "1") ||
         (amazons.turn() == "b" && ctx.currentPlayer == "0")
       ) {
-        console.log("wrong player!");
-        return { ...G };
+        console.error("wrong player!");
+        return INVALID_MOVE;
       }
-      console.log(m);
       const success = amazons.move(m);
       if (!success) {
         console.error("move was invalid!");
+        return INVALID_MOVE;
       }
-      console.log(amazons.fen());
       return { fen: amazons.fen(), last_move: m };
     }) as MoveFn<AmazonsState>,
 
