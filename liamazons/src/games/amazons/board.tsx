@@ -17,6 +17,8 @@ import { Queen } from "./tokens/queen";
 import { Square } from "./tokens/square";
 import { makeAndRunAnim, makeTransformFunction, shootAnim } from "./util";
 
+let animating = true;
+
 export const Board: FC<BoardProps<AmazonsState>> = ({
   ctx,
   G,
@@ -42,13 +44,6 @@ export const Board: FC<BoardProps<AmazonsState>> = ({
     [amz.shooting_sq(), selectedSq]
   );
 
-  if (global.window) {
-    (window as any).amz = amz;
-    (window as any).board = boardProps;
-    (window as any).G = G;
-    (window as any).ctx = ctx;
-    (window as any).forceUpdate = forceUpdate;
-  }
   useEffect(() => {
     if (amz.shooting() && amz.shooting_sq() !== selectedSq) {
       setSelectedSq(amz.shooting_sq());
@@ -81,19 +76,29 @@ export const Board: FC<BoardProps<AmazonsState>> = ({
     b: useRef<RefObject<HTMLDivElement>[]>([]),
   };
 
-  queenRefs.w.current = pieces.w.map(
-    (_, i) => queenRefs.w.current[i] ?? createRef<HTMLDivElement>()
-  );
-  queenRefs.b.current = pieces.w.map(
-    (_, i) => queenRefs.b.current[i] ?? createRef<HTMLDivElement>()
-  );
+  queenRefs.w.current = pieces.w.map((_, i) => {
+    if (queenRefs.w.current[i]) return queenRefs.w.current[i]!;
+    console.log("creating white queen ref");
+    return createRef<HTMLDivElement>();
+  });
+  queenRefs.b.current = pieces.b.map((_, i) => {
+    if (queenRefs.b.current[i]) return queenRefs.b.current[i]!;
+    console.log("creating white queen ref");
+    return createRef<HTMLDivElement>();
+  });
 
   queenRefs.w.current.forEach((el, index) => {
-    if (el.current) el.current!.style.transform = transformFn(pieces.w[index]!);
+    if (el.current) {
+      // console.log("applying transform");
+      // el.current.style.transform = transformFn(pieces.w[index]!);
+    }
   });
 
   queenRefs.b.current.forEach((el, index) => {
-    if (el.current) el.current!.style.transform = transformFn(pieces.b[index]!);
+    if (el.current) {
+      // console.log("applying transform");
+      // el.current.style.transform = transformFn(pieces.b[index]!);
+    }
   });
   // end queen refs declaration
 
@@ -139,14 +144,16 @@ export const Board: FC<BoardProps<AmazonsState>> = ({
 
       const [team, id] = selectedQ!;
 
+      animating = true;
+      amz.move([selectedSq!, sq]);
+      moves.move!([selectedSq, sq]);
+
       makeAndRunAnim(
         queenRefs[team].current[id]!.current!,
         sq,
         transformFn,
         () => {
-          amz.move([selectedSq!, sq]);
-          // setSelectedSq(sq);
-          moves.move!([selectedSq, sq]);
+          animating = false;
         }
       );
       return;
@@ -158,6 +165,15 @@ export const Board: FC<BoardProps<AmazonsState>> = ({
   function unselect() {
     setSelectedSq(null);
     setSelectedQ(null);
+  }
+
+  if (global.window) {
+    (window as any).amz = amz;
+    (window as any).board = boardProps;
+    (window as any).G = G;
+    (window as any).ctx = ctx;
+    (window as any).forceUpdate = forceUpdate;
+    (window as any).onClick = onClick;
   }
 
   return (
@@ -177,7 +193,8 @@ export const Board: FC<BoardProps<AmazonsState>> = ({
                 team={piece as "w" | "b"}
                 size={square_size}
                 onClick={onClick}
-                transformFn={transformFn}
+                // transformFn={transformFn}
+                initTransform={transformFn(sq)}
               />
             ))
       )}

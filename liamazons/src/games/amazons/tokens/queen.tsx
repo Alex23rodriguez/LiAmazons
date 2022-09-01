@@ -9,7 +9,7 @@ const Queen = forwardRef<
     team: string;
     size: string;
     onClick: (token: string, id: TSquare) => void;
-    transformFn: (sq: TSquare) => string;
+    initTransform: string;
   }
 >((props, ref) => {
   return (
@@ -20,7 +20,7 @@ const Queen = forwardRef<
       style={{
         width: props.size,
         height: props.size,
-        transform: props.transformFn(props.square),
+        transform: props.initTransform,
       }}
     >
       <div
