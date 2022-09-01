@@ -76,29 +76,23 @@ export const Board: FC<BoardProps<AmazonsState>> = ({
     b: useRef<RefObject<HTMLDivElement>[]>([]),
   };
 
-  queenRefs.w.current = pieces.w.map((_, i) => {
-    if (queenRefs.w.current[i]) return queenRefs.w.current[i]!;
-    console.log("creating white queen ref");
+  queenRefs.w.current = pieces.w.map((sq, i) => {
+    if (queenRefs.w.current[i]) {
+      queenRefs.w.current[i]!.current!.style.transform = transformFn(sq);
+      return queenRefs.w.current[i]!;
+    }
+    console.log("creating black queen ref");
+
     return createRef<HTMLDivElement>();
   });
-  queenRefs.b.current = pieces.b.map((_, i) => {
-    if (queenRefs.b.current[i]) return queenRefs.b.current[i]!;
-    console.log("creating white queen ref");
+  queenRefs.b.current = pieces.b.map((sq, i) => {
+    if (queenRefs.b.current[i]) {
+      queenRefs.b.current[i]!.current!.style.transform = transformFn(sq);
+      return queenRefs.b.current[i]!;
+    }
+    console.log("creating black queen ref");
+
     return createRef<HTMLDivElement>();
-  });
-
-  queenRefs.w.current.forEach((el, index) => {
-    if (el.current) {
-      // console.log("applying transform");
-      // el.current.style.transform = transformFn(pieces.w[index]!);
-    }
-  });
-
-  queenRefs.b.current.forEach((el, index) => {
-    if (el.current) {
-      // console.log("applying transform");
-      // el.current.style.transform = transformFn(pieces.b[index]!);
-    }
   });
   // end queen refs declaration
 
@@ -194,7 +188,7 @@ export const Board: FC<BoardProps<AmazonsState>> = ({
                 size={square_size}
                 onClick={onClick}
                 // transformFn={transformFn}
-                initTransform={transformFn(sq)}
+                // initTransform={transformFn(sq)}
               />
             ))
       )}
