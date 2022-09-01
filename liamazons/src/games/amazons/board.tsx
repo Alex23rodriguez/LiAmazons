@@ -43,21 +43,19 @@ export const Board: FC<BoardProps<AmazonsState>> = ({
   );
 
   const pieces = amz.pieces();
+
+  // start queen refs declaration
   const queenRefs = {
     w: useRef<RefObject<HTMLDivElement>[]>([]),
     b: useRef<RefObject<HTMLDivElement>[]>([]),
   };
 
-  for (const team of ["b", "w"] as ["b", "w"]) {
-    for (const sq of pieces[team as "b" | "w"]) {
-      queenRefs.w.current = pieces.w.map(
-        (_, i) => queenRefs.w.current[i] ?? createRef<HTMLDivElement>()
-      );
-      queenRefs.b.current = pieces.w.map(
-        (_, i) => queenRefs.b.current[i] ?? createRef<HTMLDivElement>()
-      );
-    }
-  }
+  queenRefs.w.current = pieces.w.map(
+    (_, i) => queenRefs.w.current[i] ?? createRef<HTMLDivElement>()
+  );
+  queenRefs.b.current = pieces.w.map(
+    (_, i) => queenRefs.b.current[i] ?? createRef<HTMLDivElement>()
+  );
 
   queenRefs.w.current.forEach((el, index) => {
     if (el.current) el.current!.style.transform = transformFn(pieces.w[index]!);
@@ -66,6 +64,7 @@ export const Board: FC<BoardProps<AmazonsState>> = ({
   queenRefs.b.current.forEach((el, index) => {
     if (el.current) el.current!.style.transform = transformFn(pieces.b[index]!);
   });
+  // end queen refs declaration
 
   const board_size = "min(80vh, 80vw)";
   const square_size = `calc(${board_size} / ${cols})`;
