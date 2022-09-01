@@ -4,7 +4,7 @@ import {
   Square as TSquare,
 } from "amazons-game-engine/dist/types";
 import { BoardProps } from "boardgame.io/dist/types/packages/react";
-import { FC, RefObject, useEffect, useRef } from "react";
+import { FC, RefObject, useCallback, useRef, useState } from "react";
 import { AmazonsState } from "./game";
 import { ArrowAnim } from "./tokens/anim_arrow";
 import { Queen } from "./tokens/queen";
@@ -26,9 +26,13 @@ export const Board2: FC<BoardProps<AmazonsState>> = ({
   const size = amz.size();
   const { rows, cols } = size;
 
+  const [, updateState] = useState({});
+  const forceUpdate = useCallback(() => updateState({}), []);
+
   if (global.window) {
     (window as any).amz = amz;
     (window as any).board = boardProps;
+    (window as any).forceUpdate = forceUpdate;
   }
 
   const transformFn = makeTransformFunction(amz);
