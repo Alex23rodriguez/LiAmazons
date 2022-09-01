@@ -125,10 +125,9 @@ export const Board: FC<BoardProps<AmazonsState>> = ({
     if (ctx.gameover) return;
     if (amz.shooting()) {
       // place an arrow
-      animating = sq;
-      moves.move!([sq]);
       if (movable.includes(sq) && selectedSq) {
-        // playing it safe
+        animating = sq;
+        moves.move!([sq]);
         shootAnim(selectedSq, sq, transformFn, () => {
           animating = null;
           unselect();
