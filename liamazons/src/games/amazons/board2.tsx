@@ -1,8 +1,5 @@
 import { Amazons } from "amazons-game-engine";
-import {
-  Move as TMove,
-  Square as TSquare,
-} from "amazons-game-engine/dist/types";
+import { Square as TSquare } from "amazons-game-engine/dist/types";
 import { BoardProps } from "boardgame.io/dist/types/packages/react";
 import { FC, RefObject, useCallback, useRef, useState } from "react";
 import { AmazonsState } from "./game";
@@ -10,10 +7,6 @@ import { ArrowAnim } from "./tokens/anim_arrow";
 import { Queen } from "./tokens/queen";
 import { Square } from "./tokens/square";
 import { makeAndRunAnim, makeTransformFunction, shootAnim } from "./util";
-
-const mymoves: TMove[] = [["c1", "c4"], ["a6"], ["a4", "d1"], ["d5"]];
-let movnum = 0;
-let from: TSquare = "a1";
 
 export const Board2: FC<BoardProps<AmazonsState>> = ({
   ctx,
@@ -28,6 +21,12 @@ export const Board2: FC<BoardProps<AmazonsState>> = ({
 
   const [, updateState] = useState({});
   const forceUpdate = useCallback(() => updateState({}), []);
+
+  const [selectedSq, setSelectedSq] = useState<TSquare | null>(null);
+  const [selectedQ, setSelectedQ] = useState<["b" | "w", number] | null>(null);
+  const [movable, setMovable] = useState(
+    amz.shooting() ? (amz.moves().flat() as TSquare[]) : []
+  );
 
   if (global.window) {
     (window as any).amz = amz;
@@ -62,24 +61,62 @@ export const Board2: FC<BoardProps<AmazonsState>> = ({
   const board_size = "min(80vh, 80vw)";
   const square_size = `calc(${board_size} / ${cols})`;
 
-  function onClick(token: string, id: TSquare | number) {
+  const onClick = (token: string, sq: TSquare) => {
+    if (ctx.gameover) return;
     if (amz.shooting()) {
-      shootAnim(from, mymoves[movnum]![0], amz, () => {
-        moves.move!(mymoves[movnum]);
-        movnum++;
-      });
-    } else if (typeof id === "number" && (token === "w" || token === "b")) {
-      makeAndRunAnim(
-        myRefs[token][id]!.current!,
-        mymoves[movnum]!.at(-1)!,
-        amz,
-        () => {
-          moves.move!(mymoves[movnum]);
-          from = mymoves[movnum]![1]!;
-          movnum++;
-        }
-      );
+      // place an arrow
+      if (movable.includes(sq) && selectedSq) {
+        // playing it safe
+        shootAnim(selectedSq, sq, transformFn, () => {
+          setMovable([]);
+          setSelectedSq(null);
+          moves.move!([sq]);
+        });
+      }
+      return;
     }
+
+    if (token === amz.turn() && sq != selectedSq) {
+      // select a queen
+      const poss_moves = amz.moves_dict()[sq]; //playing it safe
+
+      const queenId = pieces[token].indexOf(sq);
+      if (queenId === -1) {
+        console.error("no queen found at square", sq);
+      }
+      setSelectedQ([token, queenId]);
+
+      if (poss_moves) {
+        setSelectedSq(sq);
+        setMovable(poss_moves);
+      } else {
+        console.error("no moves was not supposed to happen");
+      }
+      return;
+    }
+
+    if (movable.includes(sq)) {
+      //move a queen
+
+      const [team, id] = selectedQ!;
+
+      makeAndRunAnim(myRefs[team][id]!.current!, sq, transformFn, () => {
+        amz.move([selectedSq!, sq]);
+        setMovable(amz.moves().flat() as TSquare[]);
+        setSelectedSq(sq);
+        moves.move!([selectedSq, sq]);
+      });
+      return;
+    } else if (selectedQ) {
+      unselectQueen();
+    }
+
+    console.log("some other sht happened");
+  };
+  function unselectQueen() {
+    setSelectedSq(null);
+    setSelectedQ(null);
+    setMovable([]);
   }
 
   return (
@@ -94,7 +131,6 @@ export const Board2: FC<BoardProps<AmazonsState>> = ({
           : sq_array.map((sq, i) => (
               <Queen
                 ref={myRefs[piece as "w" | "b"][i]!}
-                id={i}
                 key={piece + i}
                 square={sq}
                 team={piece as "w" | "b"}
@@ -109,7 +145,9 @@ export const Board2: FC<BoardProps<AmazonsState>> = ({
       {square_names.map((sq) => (
         <Square
           key={sq}
-          token={pieces["x"]!.includes(sq) ? "x" : ""}
+          token={
+            pieces["x"]!.includes(sq) ? "x" : movable.includes(sq) ? "m" : ""
+          }
           shooting={amz.shooting()}
           square={sq}
           color={amz.square_color(sq)}

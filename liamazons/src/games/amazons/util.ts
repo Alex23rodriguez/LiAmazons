@@ -60,6 +60,6 @@ export function shootAnim(
   ).onfinish = () => {
     el.style.transform = transformStrTo;
     callback();
-    // el.style.display = "none";
+    setTimeout(() => (el.style.display = "none"), 100); // TODO: lol temporary solution
   };
 }

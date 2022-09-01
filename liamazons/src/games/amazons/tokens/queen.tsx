@@ -5,18 +5,17 @@ import { colorPalette } from "../settings";
 export const Queen = forwardRef<
   HTMLDivElement,
   {
-    id: number;
     square: TSquare;
     team: string;
     size: string;
-    onClick: (token: string, id: number) => void;
+    onClick: (token: string, id: TSquare) => void;
     transformFn: (sq: TSquare) => string;
   }
 >((props, ref) => {
   return (
     <div
       ref={ref}
-      onClick={() => props.onClick(props.team, props.id)}
+      onClick={() => props.onClick(props.team, props.square)}
       className="absolute z-20 grid place-items-center"
       style={{
         width: props.size,
