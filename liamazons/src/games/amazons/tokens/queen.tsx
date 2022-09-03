@@ -1,17 +1,19 @@
 import type { Square as TSquare } from "amazons-game-engine/dist/types";
-import { FC, forwardRef } from "react";
+import { forwardRef } from "react";
 import { colorPalette } from "../settings";
 
-export const Queen: FC<{
-  index: number;
-  square: TSquare;
-  team: string;
-  size: string;
-  onClick: (token: string, id: TSquare) => void;
-}> = (props) => {
+const Queen = forwardRef<
+  HTMLDivElement,
+  {
+    square: TSquare;
+    team: string;
+    size: string;
+    onClick: (token: string, id: TSquare) => void;
+  }
+>((props, ref) => {
   return (
     <div
-      id={props.team + props.index}
+      ref={ref}
       onClick={() => props.onClick(props.team, props.square)}
       className="absolute z-20 grid place-items-center"
       style={{
@@ -26,4 +28,7 @@ export const Queen: FC<{
       <div className="absolute w-3/5 h-3/5 rounded-full border border-black" />
     </div>
   );
-};
+});
+Queen.displayName = "Queen";
+
+export { Queen };

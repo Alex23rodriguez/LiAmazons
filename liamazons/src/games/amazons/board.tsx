@@ -2,11 +2,14 @@ import { Amazons } from "amazons-game-engine";
 import { Square as TSquare } from "amazons-game-engine/dist/types";
 import { BoardProps } from "boardgame.io/dist/types/packages/react";
 import {
+  createRef,
   FC,
+  RefObject,
   useCallback,
   useEffect,
   useLayoutEffect,
   useMemo,
+  useRef,
   useState,
 } from "react";
 import { AmazonsState } from "./game";
@@ -15,9 +18,9 @@ import { Queen } from "./tokens/queen";
 import { Square } from "./tokens/square";
 import {
   makeAndRunAnim,
+  makeBasicAnim,
   makeTransformFunction,
   shootAnim,
-  transformQueens,
 } from "./util";
 
 let animating: TSquare | null = null;
@@ -78,6 +81,17 @@ export const Board: FC<BoardProps<AmazonsState>> = ({
   const pieces = amz.pieces();
 
   // start queen refs declaration
+  const queenRefs = {
+    w: useRef<RefObject<HTMLDivElement>[]>([]),
+    b: useRef<RefObject<HTMLDivElement>[]>([]),
+  };
+
+  queenRefs.w.current = pieces.w.map(
+    (_, i) => queenRefs.w.current[i] ?? createRef<HTMLDivElement>()
+  );
+  queenRefs.b.current = pieces.b.map(
+    (_, i) => queenRefs.b.current[i] ?? createRef<HTMLDivElement>()
+  );
 
   useLayoutEffect(() => {
     compareSquares();
@@ -90,8 +104,16 @@ export const Board: FC<BoardProps<AmazonsState>> = ({
     if (animating) {
       return;
     }
-
-    transformQueens(pieces, transformFn);
+    for (const team of ["b", "w"] as ["b", "w"]) {
+      queenRefs[team].current.forEach((el, index) => {
+        if (!el.current) return;
+        const correct = transformFn(pieces[team][index]!);
+        if (el.current.style.transform !== correct) {
+          // el.current.style.transform = transformFn(pieces[team][index]!);
+          makeBasicAnim(el.current, correct);
+        }
+      });
+    }
   }
 
   // board dimensions
@@ -122,7 +144,6 @@ export const Board: FC<BoardProps<AmazonsState>> = ({
         console.error("no queen found at square", sq);
       }
       setSelectedQ([token, queenId]);
-      console.log("set selected queen to", token, queenId);
 
       if (poss_moves) {
         //playing it safe
@@ -137,8 +158,6 @@ export const Board: FC<BoardProps<AmazonsState>> = ({
       //move a queen
 
       const [team, id] = selectedQ!;
-      console.log("moving", team, id);
-      console.log("moving from", selectedSq, sq);
 
       animating = sq;
       if (global.window) {
@@ -146,19 +165,22 @@ export const Board: FC<BoardProps<AmazonsState>> = ({
       }
       amz.move([selectedSq!, sq]);
       moves.move!([selectedSq, sq]);
-      makeAndRunAnim(team + id, sq, transformFn, () => {
-        animating = null;
-        if (global.window) {
-          (window as any).animating = animating;
+      makeAndRunAnim(
+        queenRefs[team].current[id]!.current!,
+        sq,
+        transformFn,
+        () => {
+          animating = null;
+          if (global.window) {
+            (window as any).animating = animating;
+          }
         }
-      });
+      );
       return;
     } else if (selectedQ) {
       unselect();
     }
   };
-
-  // function updateQueenRef(team: "b" | "w", from: TSquare, to: TSquare) {}
 
   function unselect() {
     setSelectedSq(null);
@@ -177,6 +199,7 @@ export const Board: FC<BoardProps<AmazonsState>> = ({
     (window as any).G = G;
     (window as any).ctx = ctx;
     (window as any).forceUpdate = forceUpdate;
+    (window as any).queenRefs = queenRefs;
   }
 
   return (
@@ -190,7 +213,7 @@ export const Board: FC<BoardProps<AmazonsState>> = ({
           piece !== "x" &&
           sq_array.map((sq, i) => (
             <Queen
-              index={i}
+              ref={queenRefs[piece as "w" | "b"].current[i]}
               key={piece + i}
               square={sq}
               team={piece as "w" | "b"}
