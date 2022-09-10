@@ -35,7 +35,7 @@ export const Board: FC<BoardProps<AmazonsState>> = ({
   moves,
   ...boardProps
 }) => {
-  const amz = Amazons(G.fen);
+  const amz = new Amazons(G);
   const size = amz.size();
   const { rows, cols } = size;
 
