@@ -205,7 +205,7 @@ export const Board: FC<BoardProps<AmazonsState>> = ({
   return (
     <div
       id="board"
-      className="select-none grid grid-cols-6"
+      className={`select-none grid grid-cols-${cols}`}
       style={{ width: board_size }}
     >
       {Object.entries(pieces).map(
