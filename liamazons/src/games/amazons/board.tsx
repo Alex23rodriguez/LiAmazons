@@ -63,6 +63,13 @@ export const Board: FC<BoardProps<AmazonsState>> = ({
     if (selectedSq) {
       if (!amz.moves_dict()[selectedSq]) {
         setSelectedSq(null);
+        if (G.last_move.length === 3) {
+          animating = G.last_move[2]!;
+          shootAnim(G.last_move[1]!, G.last_move[2]!, transformFn, () => {
+            animating = null;
+            unselect();
+          });
+        }
       }
     }
   }, [amz.fen()]);
@@ -125,12 +132,7 @@ export const Board: FC<BoardProps<AmazonsState>> = ({
     if (amz.shooting()) {
       // place an arrow
       if (movable.includes(sq) && selectedSq) {
-        animating = sq;
         moves.move!([sq]);
-        shootAnim(selectedSq, sq, transformFn, () => {
-          animating = null;
-          unselect();
-        });
       }
       return;
     }
@@ -141,7 +143,6 @@ export const Board: FC<BoardProps<AmazonsState>> = ({
 
       const queenId = pieces[token].indexOf(sq);
       if (queenId === -1) {
-        console.error("no queen found at square", sq);
       }
       setSelectedQ([token, queenId]);
 

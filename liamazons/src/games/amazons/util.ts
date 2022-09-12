@@ -1,4 +1,3 @@
-import { square_to_coords } from "amazons-game-engine";
 import { Square } from "amazons-game-engine/dist/types";
 
 // const animationSpeed = 250; //ms
@@ -59,18 +58,22 @@ export function shootAnim(
   const transformStrFrom = transformFn(from);
   const transformStrTo = transformFn(to);
 
-  el.style.transform = transformStrFrom;
-  el.style.display = "";
+  el.style.display = "none";
 
-  el.animate(
-    { transform: transformStrTo },
-    {
-      duration: 250,
-      easing: "ease-in-out",
-    }
-  ).onfinish = () => {
-    el.style.transform = transformStrTo;
-    callback();
-    setTimeout(() => (el.style.display = "none"), 100); // TODO: lol temporary solution
-  };
+  setTimeout(() => {
+    el.style.transform = transformStrFrom;
+  }, 50);
+  setTimeout(() => {
+    el.style.display = "";
+    el.animate(
+      { transform: transformStrTo },
+      {
+        duration: 250,
+        easing: "ease-in-out",
+      }
+    ).onfinish = () => {
+      el.style.transform = transformStrTo;
+      callback();
+    };
+  }, 100);
 }
