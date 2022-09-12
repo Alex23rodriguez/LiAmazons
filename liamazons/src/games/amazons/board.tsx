@@ -33,7 +33,8 @@ export const Board: FC<BoardProps<AmazonsState>> = ({
   ctx,
   G,
   moves,
-  ...boardProps
+  isMultiplayer,
+  isActive,
 }) => {
   const amz = new Amazons(G);
   const size = amz.size();
@@ -129,6 +130,8 @@ export const Board: FC<BoardProps<AmazonsState>> = ({
 
   const onClick = (token: string, sq: TSquare) => {
     if (ctx.gameover) return;
+    if (isMultiplayer && !isActive) return;
+
     if (amz.shooting()) {
       // place an arrow
       if (movable.includes(sq) && selectedSq) {
@@ -196,7 +199,7 @@ export const Board: FC<BoardProps<AmazonsState>> = ({
 
   if (global.window) {
     (window as any).amz = amz;
-    (window as any).board = boardProps;
+    // (window as any).board = boardProps;
     (window as any).G = G;
     (window as any).ctx = ctx;
     (window as any).forceUpdate = forceUpdate;
