@@ -1,7 +1,7 @@
 import { square_to_coords } from "amazons-game-engine";
 import { Square } from "amazons-game-engine/dist/types";
 
-const animationSpeed = 250; //ms
+// const animationSpeed = 250; //ms
 
 function makeTransform(sq: Square, amz: any) {
   const { row, col } = amz.square_to_coords(sq);
@@ -21,7 +21,7 @@ export function makeBasicAnim(el: HTMLDivElement, transformStr: string) {
     {
       transform: transformStr,
     },
-    { duration: animationSpeed, easing: "ease-in-out" }
+    { duration: 250, easing: "ease-in-out" }
   ).onfinish = () => {
     el.style.transform = transformStr;
   };
@@ -40,7 +40,7 @@ export function makeAndRunAnim(
       transform: transformStr,
     },
     {
-      duration: animationSpeed,
+      duration: 250,
       easing: "ease-in-out",
     }
   ).onfinish = () => {
@@ -65,7 +65,7 @@ export function shootAnim(
   el.animate(
     { transform: transformStrTo },
     {
-      duration: animationSpeed,
+      duration: 250,
       easing: "ease-in-out",
     }
   ).onfinish = () => {
