@@ -58,11 +58,9 @@ export function shootAnim(
   const transformStrFrom = transformFn(from);
   const transformStrTo = transformFn(to);
 
-  el.style.display = "none";
-
-  setTimeout(() => {
-    el.style.transform = transformStrFrom;
-  }, 50);
+  // setTimeout(() => {
+  el.style.transform = transformStrFrom;
+  // }, 50);
   setTimeout(() => {
     el.style.display = "";
     el.animate(
@@ -72,8 +70,9 @@ export function shootAnim(
         easing: "ease-in-out",
       }
     ).onfinish = () => {
-      el.style.transform = transformStrTo;
+      // el.style.transform = transformStrTo;
       callback();
+      el.style.display = "none";
     };
-  }, 100);
+  }, 50);
 }

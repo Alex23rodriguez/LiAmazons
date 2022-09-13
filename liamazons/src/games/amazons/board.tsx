@@ -6,7 +6,6 @@ import {
   FC,
   RefObject,
   useCallback,
-  useEffect,
   useLayoutEffect,
   useMemo,
   useRef,
@@ -55,7 +54,7 @@ export const Board: FC<BoardProps<AmazonsState>> = ({
     [amz.shooting_sq(), selectedSq]
   );
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (amz.shooting() && amz.shooting_sq() !== selectedSq) {
       setSelectedSq(amz.shooting_sq());
       return;
@@ -69,6 +68,7 @@ export const Board: FC<BoardProps<AmazonsState>> = ({
           shootAnim(G.last_move[1]!, G.last_move[2]!, transformFn, () => {
             animating = null;
             unselect();
+            forceUpdate()
           });
         }
       }
