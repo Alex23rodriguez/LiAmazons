@@ -1,5 +1,5 @@
 export default () => (
-  <svg viewBox="0 0 100 100">
-    <circle cx={50} cy={50} r={25} />
+  <svg viewBox="0 0 4 4">
+    <circle cx={2} cy={2} r={1} />
   </svg>
 );
