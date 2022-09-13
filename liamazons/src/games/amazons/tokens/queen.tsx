@@ -22,7 +22,7 @@ const Queen = forwardRef<
         height: props.size,
       }}
     >
-      <SvgToken team={props.team} />
+      <SvgToken token={props.team} />
       {/*   <div */}
       {/*     className="absolute w-4/5 h-4/5 rounded-full border border-black" */}
       {/*     style={{ backgroundColor: colorPalette[props.team] }} */}
