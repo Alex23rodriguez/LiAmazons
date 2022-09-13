@@ -1,6 +1,7 @@
 import type { Square as TSquare } from "amazons-game-engine/dist/types";
 import { forwardRef } from "react";
 import { colorPalette } from "../settings";
+import { SvgToken } from "./svgtoken";
 
 const Queen = forwardRef<
   HTMLDivElement,
@@ -21,11 +22,12 @@ const Queen = forwardRef<
         height: props.size,
       }}
     >
-      <div
-        className="absolute w-4/5 h-4/5 rounded-full border border-black"
-        style={{ backgroundColor: colorPalette[props.team] }}
-      />
-      <div className="absolute w-3/5 h-3/5 rounded-full border border-black" />
+      <SvgToken team={props.team} />
+      {/*   <div */}
+      {/*     className="absolute w-4/5 h-4/5 rounded-full border border-black" */}
+      {/*     style={{ backgroundColor: colorPalette[props.team] }} */}
+      {/*   /> */}
+      {/*   <div className="absolute w-3/5 h-3/5 rounded-full border border-black" /> */}
     </div>
   );
 });
