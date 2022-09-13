@@ -1,5 +1,5 @@
-export default () => (
-  <svg
+export default function CrossArrow(){
+  return <svg
     version="1.1"
     id="Capa_1"
     xmlns="http://www.w3.org/2000/svg"
@@ -22,4 +22,4 @@ export default () => (
       />
     </g>
   </svg>
-);
+}
