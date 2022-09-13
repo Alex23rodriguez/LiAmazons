@@ -1,6 +1,6 @@
 import { FC } from "react";
 
-export const Piece1: FC<{ bgcolor: string }> = ({ bgcolor }) => (
+export default ({ bgcolor }: { bgcolor: string }) => (
   <svg
     version="1.1"
     id="Layer_1"
