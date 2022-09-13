@@ -236,7 +236,7 @@ export const Board: FC<BoardProps<AmazonsState>> = ({
           square={sq}
           color={color}
           onClick={onClick}
-          selected={false}
+          selected={G.last_move.includes(sq)}
         />
       ))}
     </div>

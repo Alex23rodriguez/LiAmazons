@@ -6,6 +6,6 @@ export const colorPalette: { [key: string]: string } = {
   canMove: "black",
   canMoveShooting: "red",
   arrow: "black",
-  light_h: "yellow",
-  dark_h: "yellow",
+  light_h: "#f5f5ab",
+  dark_h: "#c2f5ab",
 };
