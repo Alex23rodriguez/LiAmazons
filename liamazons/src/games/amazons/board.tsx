@@ -23,9 +23,14 @@ import {
 } from "./util";
 import UIfx from "uifx";
 import MoveAudio from "../../assets/sound/Move.mp3";
+import ShootAudio from "../../assets/sound/Capture.mp3";
 
 let myMoveAudio: UIfx;
-if (global.document) myMoveAudio = new UIfx(MoveAudio);
+let myShootAudio: UIfx;
+if (global.document) {
+  myMoveAudio = new UIfx(MoveAudio);
+  myShootAudio = new UIfx(ShootAudio);
+}
 
 let animating: TSquare | null = null;
 
@@ -71,7 +76,7 @@ export const Board: FC<BoardProps<AmazonsState>> = ({
             unselect();
             forceUpdate();
           });
-          myMoveAudio.play();
+          myShootAudio.play();
         }
       }
     }
