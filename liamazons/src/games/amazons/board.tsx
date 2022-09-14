@@ -21,12 +21,13 @@ import {
   makeTransformFunction,
   shootAnim,
 } from "./util";
+import UIfx from "uifx";
+import MoveAudio from "../../assets/sound/Move.mp3";
+
+let myMoveAudio: UIfx;
+if (global.document) myMoveAudio = new UIfx(MoveAudio);
 
 let animating: TSquare | null = null;
-
-if (global.window) {
-  (window as any).animating = animating;
-}
 
 export const Board: FC<BoardProps<AmazonsState>> = ({
   ctx,
@@ -68,8 +69,9 @@ export const Board: FC<BoardProps<AmazonsState>> = ({
           shootAnim(G.last_move[1]!, G.last_move[2]!, transformFn, () => {
             animating = null;
             unselect();
-            forceUpdate()
+            forceUpdate();
           });
+          myMoveAudio.play();
         }
       }
     }
@@ -112,15 +114,19 @@ export const Board: FC<BoardProps<AmazonsState>> = ({
     if (animating) {
       return;
     }
+    let moved = false;
     for (const team of ["b", "w"] as ["b", "w"]) {
       queenRefs[team].current.forEach((el, index) => {
         if (!el.current) return;
         const correct = transformFn(pieces[team][index]!);
         if (el.current.style.transform !== correct) {
-          // el.current.style.transform = transformFn(pieces[team][index]!);
+          moved = true;
           makeBasicAnim(el.current, correct);
         }
       });
+    }
+    if (moved) {
+      myMoveAudio.play;
     }
   }
 
@@ -164,20 +170,15 @@ export const Board: FC<BoardProps<AmazonsState>> = ({
       const [team, id] = selectedQ!;
 
       animating = sq;
-      if (global.window) {
-        (window as any).animating = animating;
-      }
       amz.move([selectedSq!, sq]);
       moves.move!([selectedSq, sq]);
+      myMoveAudio.play();
       makeAndRunAnim(
         queenRefs[team].current[id]!.current!,
         sq,
         transformFn,
         () => {
           animating = null;
-          if (global.window) {
-            (window as any).animating = animating;
-          }
         }
       );
       return;
@@ -195,15 +196,6 @@ export const Board: FC<BoardProps<AmazonsState>> = ({
     if (movable.includes(sq)) return "m";
     if (animating !== sq && pieces.x.includes(sq)) return "x";
     return "";
-  }
-
-  if (global.window) {
-    (window as any).amz = amz;
-    // (window as any).board = boardProps;
-    (window as any).G = G;
-    (window as any).ctx = ctx;
-    (window as any).forceUpdate = forceUpdate;
-    (window as any).queenRefs = queenRefs;
   }
 
   return (
