@@ -23,13 +23,14 @@ import {
 } from "./util";
 import UIfx from "uifx";
 import MoveAudio from "../../assets/sound/Move.mp3";
-import ShootAudio from "../../assets/sound/Capture.mp3";
+import ShootAudio from "../../assets/sound/pop.mp3";
 
 let myMoveAudio: UIfx;
 let myShootAudio: UIfx;
 if (global.document) {
   myMoveAudio = new UIfx(MoveAudio);
   myShootAudio = new UIfx(ShootAudio);
+  myShootAudio.setVolume(0.5)
 }
 
 let animating: TSquare | null = null;
