@@ -131,7 +131,7 @@ export const Board: FC<BoardProps<AmazonsState>> = ({
       });
     }
     if (moved) {
-      myMoveAudio.play;
+      myMoveAudio.play();
     }
   }
 
