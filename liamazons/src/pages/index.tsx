@@ -12,8 +12,9 @@ const Home: NextPage = () => {
         <meta name="description" content="liamazons" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className="container flex flex-col items-center justify-between min-h-[50vh] p-4 mx-auto">
-        <span className="font-bold text-6xl text-center">
+      <main className="container flex flex-col items-center justify-between min-h-[50vh] p-6 mx-auto">
+        <span className="font-bold text-6xl text-center">liamazons</span>
+        <span className="font-bold text-4xl text-center">
           The best way to play Game of the Amazons
         </span>
         <a href="/amazons">Play Locally</a>
