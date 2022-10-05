@@ -1,5 +1,7 @@
 import type { NextPage } from "next";
 import Head from "next/head";
+import Link from "next/link";
+
 // import { trpc } from "../utils/trpc";
 
 const Home: NextPage = () => {
@@ -17,11 +19,21 @@ const Home: NextPage = () => {
         <span className="font-bold text-4xl text-center">
           The best way to play Game of the Amazons
         </span>
-        <a href="/amazons">Play Locally</a>
-        <a href="/tutorial">Tutorial</a>
-        <a href="/lobby">Play Online</a>
-        <a>Play a Friend (coming soon)</a>
-        <a>Play the computer (coming soon)</a>
+        <Link href="/amazons">
+          <a>Play Locally</a>
+        </Link>
+        <Link href="/lobby">
+          <a>Play Online</a>
+        </Link>
+        <Link href="#">
+          <a>Tutorial (coming soon)</a>
+        </Link>
+        <Link href="#">
+          <a>Play a Friend (coming soon)</a>
+        </Link>
+        <Link href="#">
+          <a>Play the computer (coming soon)</a>
+        </Link>
       </main>
     </>
   );
