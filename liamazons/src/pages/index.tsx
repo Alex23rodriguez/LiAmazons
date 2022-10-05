@@ -19,8 +19,9 @@ const Home: NextPage = () => {
         </span>
         <a href="/amazons">Play Locally</a>
         <a href="/tutorial">Tutorial</a>
-        <a>Play a Friend</a>
         <a href="/lobby">Play Online</a>
+        <a>Play a Friend (coming soon)</a>
+        <a>Play the computer (coming soon)</a>
       </main>
     </>
   );
