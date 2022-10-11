@@ -31,6 +31,15 @@ const MyApp: AppType = (props) => {
       <CacheProvider value={emotionCache}>
         <ThemeProvider theme={theme}>
           <CssBaseline />
+          <Head>
+            <title>liamazons</title>
+            <meta name="description" content="liamazons" />
+            <link rel="icon" href="/favicon.svg" />
+            <link
+              rel="stylesheet"
+              href="https://fonts.googleapis.com/css?family=Roboto:100,200,300,400,500,700&display=swap"
+            />
+          </Head>
           <Component {...pageProps} />
         </ThemeProvider>
       </CacheProvider>

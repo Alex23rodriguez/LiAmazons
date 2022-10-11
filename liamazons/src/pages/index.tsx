@@ -1,6 +1,6 @@
 import { Header } from "../components/Header";
 import type { NextPage } from "next";
-import Head from "next/head";
+// import Head from "next/head";
 import Link from "next/link";
 
 // import { trpc } from "../utils/trpc";
@@ -10,11 +10,6 @@ const Home: NextPage = () => {
 
   return (
     <>
-      <Head>
-        <title>liamazons</title>
-        <meta name="description" content="liamazons" />
-        <link rel="icon" href="/favicon.svg" />
-      </Head>
       <Header />
       <main className="container flex flex-col items-center justify-between min-h-[50vh] p-6 mx-auto">
         <span className="font-bold text-6xl text-center">liamazons</span>
