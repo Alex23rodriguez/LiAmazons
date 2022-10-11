@@ -4,7 +4,7 @@ import type { NextPage } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import gif from "../assets/anim.gif";
-import { Typography } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 // import { trpc } from "../utils/trpc";
 
 const Home: NextPage = () => {
@@ -33,21 +33,31 @@ const Home: NextPage = () => {
         >
           <Image src={gif} />
         </div>
-        <Link href="/amazons">
-          <a>Play Locally</a>
-        </Link>
-        <Link href="/lobby">
-          <a>Play Online</a>
-        </Link>
-        <Link href="#">
-          <a>Tutorial (coming soon)</a>
-        </Link>
-        <Link href="#">
-          <a>Play a Friend (coming soon)</a>
-        </Link>
-        <Link href="#">
-          <a>Play the computer (coming soon)</a>
-        </Link>
+        <Button variant="outlined" sx={{ width: "200px" }}>
+          <Link href="/amazons">
+            <a>Play Locally</a>
+          </Link>
+        </Button>
+        <Button variant="outlined" sx={{ width: "200px" }}>
+          <Link href="/lobby">
+            <a>Play Online</a>
+          </Link>
+        </Button>
+        <Button variant="outlined" disabled sx={{ width: "200px" }}>
+          <Link href="#">
+            <a>Tutorial</a>
+          </Link>
+        </Button>
+        <Button variant="outlined" disabled sx={{ width: "200px" }}>
+          <Link href="#">
+            <a>Play a Friend</a>
+          </Link>
+        </Button>
+        <Button variant="outlined" disabled sx={{ width: "200px" }}>
+          <Link href="#">
+            <a>Play the computer</a>
+          </Link>
+        </Button>
       </main>
     </>
   );
