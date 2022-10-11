@@ -11,6 +11,7 @@ import { CacheProvider } from "@emotion/react";
 import { ThemeProvider, CssBaseline, createTheme } from "@mui/material";
 import createEmotionCache from "../utils/createEmotionCache";
 import { useState } from "react";
+import { Header } from "../components/Header";
 
 const MyApp: AppType = (props) => {
   const [myTheme, setMyTheme] = useState<"dark" | "light">("dark");
@@ -52,6 +53,7 @@ const MyApp: AppType = (props) => {
               href="https://fonts.googleapis.com/css?family=Roboto:100,200,300,400,500,700&display=swap"
             />
           </Head>
+          <Header toggleTheme={()=>{setMyTheme(myTheme === 'dark'? 'light' : 'dark')}}/>
           <Component {...pageProps} />
         </ThemeProvider>
       </CacheProvider>

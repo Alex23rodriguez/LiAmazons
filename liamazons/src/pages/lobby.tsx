@@ -10,7 +10,6 @@ const server = clientEnv.NEXT_PUBLIC_SERVER_URL;
 const LobbyPage: NextPage = () => {
   return (
     <>
-      <Header />
       <Lobby
         gameServer={server}
         lobbyServer={server}

@@ -10,7 +10,6 @@ const Home: NextPage = () => {
 
   return (
     <>
-      <Header />
       <main className="container flex flex-col items-center justify-between min-h-[50vh] p-6 mx-auto">
         <span className="font-bold text-6xl text-center">liamazons</span>
         <span className="font-bold text-4xl text-center">
