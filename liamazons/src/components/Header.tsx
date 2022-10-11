@@ -31,7 +31,7 @@ export const Header = () => {
   const [open, setOpen] = useState(false);
 
   return (
-    <AppBar position="sticky">
+    <AppBar position="sticky" color="primary">
       <StyledToolbar>
         <Link href="/">
           <a>
