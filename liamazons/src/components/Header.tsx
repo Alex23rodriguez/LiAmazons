@@ -48,19 +48,19 @@ export const Header: FC<{ toggleTheme: () => void }> = ({ toggleTheme }) => {
   const theme = useTheme();
   const isDark = theme.palette.mode === "dark";
   return (
-    <AppBar position="sticky" color="primary">
+    <AppBar position="sticky" enableColorOnDark>
       <StyledToolbar>
         <Link href="/">
           <a>
             <GroupBox>
               <LogoIcon
                 fontSize="large"
-                color={isDark ? "primary" : undefined}
+                // color={isDark ? "primary" : undefined}
               />
               <Typography
                 variant="h4"
                 sx={{ display: { xs: "none", sm: "block" } }}
-                color={isDark ? "primary" : "black"}
+                // color={isDark ? "primary" : "white"}
               >
                 liamazons
               </Typography>
@@ -127,7 +127,7 @@ export const Header: FC<{ toggleTheme: () => void }> = ({ toggleTheme }) => {
               <ListItemIcon>
                 <PersonIcon fontSize="small" />
               </ListItemIcon>
-                Profile
+              Profile
             </MenuItem>
             <MenuItem>
               <ListItemIcon>
@@ -144,7 +144,6 @@ export const Header: FC<{ toggleTheme: () => void }> = ({ toggleTheme }) => {
           </Menu>
         </GroupBox>
       </StyledToolbar>
-
     </AppBar>
   );
 };
