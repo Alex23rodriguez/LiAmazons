@@ -12,24 +12,11 @@ import { ThemeProvider, CssBaseline, createTheme } from "@mui/material";
 import createEmotionCache from "../utils/createEmotionCache";
 import { useState } from "react";
 import { Header } from "../components/Header";
+import {darkTheme, lightTheme} from '../utils/themes'
 
 const MyApp: AppType = (props) => {
   const [myTheme, setMyTheme] = useState<"dark" | "light">("dark");
-  const theme = createTheme({
-    palette: {
-      primary: {
-        light: "#9effff",
-        main: "#64ffda",
-        dark: "#14cba8",
-      },
-      secondary: {
-        light: "#666ad1",
-        main: "#303f9f",
-        dark: "#001970",
-      },
-      mode: myTheme,
-    },
-  });
+  const theme = myTheme === 'dark' ? darkTheme : lightTheme
 
   const clientSideEmotionCache = createEmotionCache();
 
