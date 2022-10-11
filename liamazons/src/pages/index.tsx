@@ -1,3 +1,4 @@
+import { Header } from "../components/Header";
 import type { NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
@@ -14,6 +15,7 @@ const Home: NextPage = () => {
         <meta name="description" content="liamazons" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+        <Header />
       <main className="container flex flex-col items-center justify-between min-h-[50vh] p-6 mx-auto">
         <span className="font-bold text-6xl text-center">liamazons</span>
         <span className="font-bold text-4xl text-center">
