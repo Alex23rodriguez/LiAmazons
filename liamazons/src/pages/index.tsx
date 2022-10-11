@@ -11,11 +11,11 @@ const Home: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Create T3 App</title>
+        <title>liamazons</title>
         <meta name="description" content="liamazons" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon.svg" />
       </Head>
-        <Header />
+      <Header />
       <main className="container flex flex-col items-center justify-between min-h-[50vh] p-6 mx-auto">
         <span className="font-bold text-6xl text-center">liamazons</span>
         <span className="font-bold text-4xl text-center">
