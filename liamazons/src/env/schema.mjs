@@ -30,5 +30,6 @@ export const clientSchema = z.object({
  * @type {{ [k in keyof z.infer<typeof clientSchema>]: z.infer<typeof clientSchema>[k] | undefined }}
  */
 export const clientEnv = {
-  NEXT_PUBLIC_SERVER_URL: "https://liamazons-server.herokuapp.com/",
+  // NEXT_PUBLIC_SERVER_URL: "https://liamazons-server.herokuapp.com/",
+  NEXT_PUBLIC_SERVER_URL: "https://liamazons-server.up.railway.app/",
 };
