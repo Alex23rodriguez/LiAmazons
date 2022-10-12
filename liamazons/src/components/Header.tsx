@@ -1,7 +1,7 @@
 import {
   AppBar,
   Avatar,
-  Badge,
+  Button,
   Box,
   Menu,
   MenuItem,
@@ -11,6 +11,7 @@ import {
   useTheme,
   Tooltip,
   ListItemIcon,
+  Stack,
 } from "@mui/material";
 
 import IconButton from "@mui/material/IconButton";
@@ -20,6 +21,8 @@ import LogoIcon from "@mui/icons-material/Support";
 import PersonIcon from "@mui/icons-material/Person";
 import SettingsIcon from "@mui/icons-material/Settings";
 import LogoutIcon from "@mui/icons-material/Logout";
+
+import { useSession, signIn, signOut } from "next-auth/react";
 
 import { FC, useState } from "react";
 import Link from "next/link";
@@ -32,9 +35,12 @@ const StyledToolbar = styled(Toolbar)({
 const GroupBox = styled(Box)({
   display: "flex",
   gap: "10px",
+  alignItems: "center",
 });
 
 export const Header: FC<{ toggleTheme: () => void }> = ({ toggleTheme }) => {
+  const { data: session } = useSession();
+
   // const [open, setOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -67,7 +73,7 @@ export const Header: FC<{ toggleTheme: () => void }> = ({ toggleTheme }) => {
             </GroupBox>
           </a>
         </Link>
-        <GroupBox>
+        <Stack direction="row">
           <Tooltip
             title={isDark ? "switch to light mode" : "switch to dark mode"}
           >
@@ -75,19 +81,27 @@ export const Header: FC<{ toggleTheme: () => void }> = ({ toggleTheme }) => {
               {isDark ? <Brightness7Icon /> : <Brightness4Icon />}
             </IconButton>
           </Tooltip>
-          <Tooltip title="Accout settings">
-            <IconButton
-              onClick={handleClick}
-              aria-controls={open ? "account-menu" : undefined}
-              aria-haspopup="true"
-              aria-expanded={open ? "true" : undefined}
-            >
-              <Avatar
-                sx={{ width: 32, height: 32 }}
-                src="http://placeimg.com/300/300/people"
-              />
-            </IconButton>
-          </Tooltip>
+
+          {session ? (
+            <Tooltip title="Accout settings">
+              <IconButton
+                onClick={handleClick}
+                aria-controls={open ? "account-menu" : undefined}
+                aria-haspopup="true"
+                aria-expanded={open ? "true" : undefined}
+              >
+                <Avatar
+                  sx={{ width: 32, height: 32 }}
+                  src="http://placeimg.com/300/300/people"
+                />
+              </IconButton>
+            </Tooltip>
+          ) : (
+            <Button color="secondary" onClick={() => signIn()}>
+              Sign in
+            </Button>
+          )}
+
           <Menu
             anchorEl={anchorEl}
             id="account-menu"
@@ -135,14 +149,14 @@ export const Header: FC<{ toggleTheme: () => void }> = ({ toggleTheme }) => {
               </ListItemIcon>
               Settings
             </MenuItem>
-            <MenuItem>
+            <MenuItem onClick={() => signOut()}>
               <ListItemIcon>
                 <LogoutIcon fontSize="small" />
               </ListItemIcon>
               Logout
             </MenuItem>
           </Menu>
-        </GroupBox>
+        </Stack>
       </StyledToolbar>
     </AppBar>
   );
