@@ -92,7 +92,7 @@ export const Header: FC<{ toggleTheme: () => void }> = ({ toggleTheme }) => {
               >
                 <Avatar
                   sx={{ width: 32, height: 32 }}
-                  src="http://placeimg.com/300/300/people"
+                  // src="http://placeimg.com/300/300/people"
                 />
               </IconButton>
             </Tooltip>
@@ -137,18 +137,26 @@ export const Header: FC<{ toggleTheme: () => void }> = ({ toggleTheme }) => {
             transformOrigin={{ horizontal: "right", vertical: "top" }}
             anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
           >
-            <MenuItem>
-              <ListItemIcon>
-                <PersonIcon fontSize="small" />
-              </ListItemIcon>
-              Profile
-            </MenuItem>
-            <MenuItem>
-              <ListItemIcon>
-                <SettingsIcon fontSize="small" />
-              </ListItemIcon>
-              Settings
-            </MenuItem>
+            <Link href="/profile">
+              <a>
+                <MenuItem>
+                  <ListItemIcon>
+                    <PersonIcon fontSize="small" />
+                  </ListItemIcon>
+                  Profile
+                </MenuItem>
+              </a>
+            </Link>
+            <Link href="/settings">
+              <a>
+                <MenuItem>
+                  <ListItemIcon>
+                    <SettingsIcon fontSize="small" />
+                  </ListItemIcon>
+                  Settings
+                </MenuItem>
+              </a>
+            </Link>
             <MenuItem onClick={() => signOut()}>
               <ListItemIcon>
                 <LogoutIcon fontSize="small" />
