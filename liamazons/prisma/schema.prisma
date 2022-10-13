@@ -12,6 +12,10 @@ generator client {
     previewFeatures = ["referentialIntegrity"]
 }
 
+model Example {
+    id String @id @default(cuid())
+  }
+
 model Account {
     id                       String   @id @default(cuid())
     createdAt                DateTime @default(now())
