@@ -40,5 +40,6 @@ export const clientSchema = z.object({
  */
 export const clientEnv = {
   // NEXT_PUBLIC_SERVER_URL: "https://liamazons-server.herokuapp.com/",
-  NEXT_PUBLIC_SERVER_URL: "https://liamazons-server.up.railway.app/",
+  // NEXT_PUBLIC_SERVER_URL: "https://liamazons-server.up.railway.app/",
+  NEXT_PUBLIC_SERVER_URL: "https://liamazons-xv9p.onrender.com",
 };
