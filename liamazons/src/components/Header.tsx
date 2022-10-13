@@ -12,15 +12,17 @@ import {
   Tooltip,
   ListItemIcon,
   Stack,
+  SvgIcon,
 } from "@mui/material";
 
 import IconButton from "@mui/material/IconButton";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
-import LogoIcon from "@mui/icons-material/Support";
+// import LogoIcon from "@mui/icons-material/Support";
 import PersonIcon from "@mui/icons-material/Person";
 import SettingsIcon from "@mui/icons-material/Settings";
 import LogoutIcon from "@mui/icons-material/Logout";
+import LogoIcon from "../assets/logo";
 
 import { useSession, signIn, signOut } from "next-auth/react";
 
@@ -31,13 +33,13 @@ const StyledToolbar = styled(Toolbar)({
   display: "flex",
   justifyContent: "space-between",
 });
-
+/* 
 const GroupBox = styled(Box)({
   display: "flex",
   gap: "10px",
   alignItems: "center",
 });
-
+ */
 export const Header: FC<{ toggleTheme: () => void }> = ({ toggleTheme }) => {
   const { data: session } = useSession();
 
@@ -58,19 +60,18 @@ export const Header: FC<{ toggleTheme: () => void }> = ({ toggleTheme }) => {
       <StyledToolbar>
         <Link href="/">
           <a>
-            <GroupBox>
+            <Stack direction="row" gap={1}>
               <LogoIcon
                 fontSize="large"
-                // color={isDark ? "primary" : undefined}
+                sx={{ width: "34px", height: "34px" }}
               />
               <Typography
                 variant="h4"
                 sx={{ display: { xs: "none", sm: "block" } }}
-                // color={isDark ? "primary" : "white"}
               >
                 liamazons
               </Typography>
-            </GroupBox>
+            </Stack>
           </a>
         </Link>
         <Stack direction="row">
@@ -91,12 +92,14 @@ export const Header: FC<{ toggleTheme: () => void }> = ({ toggleTheme }) => {
                 aria-expanded={open ? "true" : undefined}
               >
                 <Avatar
-                  sx={{ width: 32, height: 32, bgcolor:'red' }}
+                  sx={{ width: 32, height: 32 }}
                   src={session?.user?.image || ""}
                 >
-                  {
-                 session?.user?.name?.split(" ").map(w=>w[0]).join('').substring(0,2)
-                }
+                  {session?.user?.name
+                    ?.split(" ")
+                    .map((w) => w[0])
+                    .join("")
+                    .substring(0, 2)}
                 </Avatar>
               </IconButton>
             </Tooltip>
