@@ -91,9 +91,13 @@ export const Header: FC<{ toggleTheme: () => void }> = ({ toggleTheme }) => {
                 aria-expanded={open ? "true" : undefined}
               >
                 <Avatar
-                  sx={{ width: 32, height: 32 }}
-                  // src="http://placeimg.com/300/300/people"
-                />
+                  sx={{ width: 32, height: 32, bgcolor:'red' }}
+                  src={session?.user?.image || ""}
+                >
+                  {
+                 session?.user?.name?.split(" ").map(w=>w[0]).join('').substring(0,2)
+                }
+                </Avatar>
               </IconButton>
             </Tooltip>
           ) : (
