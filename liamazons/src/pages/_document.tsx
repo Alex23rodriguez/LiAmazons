@@ -1,0 +1,22 @@
+import { Html, Head, Main, NextScript } from "next/document";
+import { Header } from "../components/Header";
+
+const Document = () => (
+  <Html>
+    <Head>
+      <title>liamazons</title>
+      <meta name="description" content="liamazons" />
+      <link rel="icon" href="/favicon.svg" />
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Roboto:100,200,300,400,500,700&display=swap"
+      />
+    </Head>
+    <body>
+      <Main />
+      <NextScript />
+    </body>
+  </Html>
+);
+
+export default Document;
