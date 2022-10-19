@@ -16,7 +16,7 @@ export const CreateGame = () => {
         <Button sx={{ width: "25%" }}>10x10</Button>
         <Button sx={{ width: "25%" }}>Custom</Button>
       </ButtonGroup>
-      <MiniBoard layout={"3b2/6/b5/5w/6/2w3"} width="100px" />
+      <MiniBoard layout={"3b2/6/b5/5w/6/2w3"} width="200px" />
       <Divider />
       <Typography>Time control</Typography>
       <ButtonGroup

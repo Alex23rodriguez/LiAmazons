@@ -10,16 +10,20 @@ const Square: FC<{ color: "light" | "dark"; token: string }> = ({
 }) => {
   return (
     <div
-      className="relative w-full"
+      className="relative"
       style={{ paddingBottom: "100%", backgroundColor: colorPalette[color] }}
     >
-      <div className="absolute grid place-items-center">
-        {token === "w" || token == "b" ? (
+      {token === "w" || token == "b" ? (
+        <div className="absolute grid place-items-center w-full h-full">
           <SvgToken token={token} />
-        ) : (
-          token === "x" && <SvgToken token="x" />
-        )}
-      </div>
+        </div>
+      ) : (
+        token === "x" && (
+          <div className="absolute grid place-items-center w-full h-full">
+            <SvgToken token="x" />
+          </div>
+        )
+      )}
     </div>
   );
 };
