@@ -1,4 +1,3 @@
-import { Header } from "../components/Header";
 import { Lobby } from "boardgame.io/react";
 import { NextPage } from "next";
 import { clientEnv } from "../env/schema.mjs";
@@ -14,6 +13,7 @@ import {
   useTheme,
 } from "@mui/material";
 import { useState } from "react";
+import { CreateGame } from "../components/CreateGame";
 
 const server = clientEnv.NEXT_PUBLIC_SERVER_URL;
 
@@ -81,7 +81,7 @@ const LobbyPage: NextPage = () => {
           </Tabs>
         </AppBar>
         <TabPanel value={value} index={0} dir={theme.direction}>
-          Item One
+          <CreateGame />
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
           Item Two
