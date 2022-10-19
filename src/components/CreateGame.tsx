@@ -1,4 +1,5 @@
 import { Button, ButtonGroup, Divider, Stack, Typography } from "@mui/material";
+import { MiniBoard } from "./MiniBoard";
 
 export const CreateGame = () => {
   return (
@@ -15,6 +16,7 @@ export const CreateGame = () => {
         <Button sx={{ width: "25%" }}>10x10</Button>
         <Button sx={{ width: "25%" }}>Custom</Button>
       </ButtonGroup>
+      <MiniBoard layout={"3b2/6/b5/5w/6/2w3"} width="100px" />
       <Divider />
       <Typography>Time control</Typography>
       <ButtonGroup
