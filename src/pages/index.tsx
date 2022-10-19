@@ -33,31 +33,41 @@ const Home: NextPage = () => {
         >
           <Image src={gif} />
         </div>
-        <Button variant="outlined" sx={{ width: "200px" }}>
-          <Link href="/amazons">
-            <a>Play Locally</a>
-          </Link>
-        </Button>
-        <Button variant="outlined" sx={{ width: "200px" }}>
-          <Link href="/lobby">
-            <a>Play Online</a>
-          </Link>
-        </Button>
-        <Button variant="outlined" disabled sx={{ width: "200px" }}>
-          <Link href="#">
-            <a>Tutorial</a>
-          </Link>
-        </Button>
-        <Button variant="outlined" disabled sx={{ width: "200px" }}>
-          <Link href="#">
-            <a>Play a Friend</a>
-          </Link>
-        </Button>
-        <Button variant="outlined" disabled sx={{ width: "200px" }}>
-          <Link href="#">
-            <a>Play the computer</a>
-          </Link>
-        </Button>
+        <Link href="/amazons">
+          <a>
+            <Button variant="outlined" sx={{ width: "200px" }}>
+              Play Locally
+            </Button>
+          </a>
+        </Link>
+        <Link href="/lobby">
+          <a>
+            <Button variant="outlined" sx={{ width: "200px" }}>
+              Play Online
+            </Button>
+          </a>
+        </Link>
+        <Link href="#">
+          <a>
+            <Button variant="outlined" disabled sx={{ width: "200px" }}>
+              Tutorial
+            </Button>
+          </a>
+        </Link>
+        <Link href="#">
+          <a>
+            <Button variant="outlined" disabled sx={{ width: "200px" }}>
+              Play a Friend
+            </Button>
+          </a>
+        </Link>
+        <Link href="#">
+          <a>
+            <Button variant="outlined" disabled sx={{ width: "200px" }}>
+              Play the computer
+            </Button>
+          </a>
+        </Link>
       </main>
     </>
   );
