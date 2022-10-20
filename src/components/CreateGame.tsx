@@ -23,7 +23,9 @@ const boards = [
 
 export const CreateGame = () => {
   const [index, setIndex] = useState(0);
-  const [customLayout, setCustomLayout] = useState("6/6/6/6/6/6");
+  const [customLayout, setCustomLayout] = useState(
+    "x3w2x/x6x/xb5x/x5bx/x6x/x2w3x"
+  );
   const [layoutError, setLayoutError] = useState("");
 
   const onChange: ChangeEventHandler<HTMLInputElement> = (e) => {
@@ -63,9 +65,10 @@ export const CreateGame = () => {
       ) : (
         <>
           <TextField
-            label="Enter FEN"
+            label="Enter layout"
             variant="standard"
             onChange={onChange}
+            defaultValue="x3w2x/x6x/xb5x/x5bx/x6x/x2w3x"
             sx={{ width: boardWidth }}
           />
           <MiniBoard layout={customLayout} width={boardWidth} />
