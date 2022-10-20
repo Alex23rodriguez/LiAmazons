@@ -8,9 +8,9 @@ import {
 } from "@mui/material";
 import { ChangeEventHandler, useState } from "react";
 import { MiniBoard } from "./MiniBoard";
-import { is_valid_layout } from "amazons-game-engine";
+import { is_valid_fen, is_valid_layout } from "amazons-game-engine";
 
-const boardWidth = "250px";
+const boardWidth = "300px";
 
 const boards = [
   <MiniBoard layout="3b2/6/b5/5w/6/2w3" width={boardWidth} />,
@@ -29,12 +29,15 @@ export const CreateGame = () => {
   const [layoutError, setLayoutError] = useState("");
 
   const onChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-    console.log(e.target.value);
-    const valid = is_valid_layout(e.target.value);
+    const val = e.target.value.trim();
+
+    const valid = val.includes(" ") ? is_valid_fen(val) : is_valid_layout(val);
+
+    // const valid = is_valid_layout(e.target.value);
     if (valid.error) setLayoutError(valid.error);
     else {
       setLayoutError("");
-      setCustomLayout(e.target.value);
+      setCustomLayout(val);
     }
   };
 
@@ -65,7 +68,7 @@ export const CreateGame = () => {
       ) : (
         <>
           <TextField
-            label="Enter layout"
+            label="Paste layout or FEN"
             variant="standard"
             onChange={onChange}
             defaultValue="x3w2x/x6x/xb5x/x5bx/x6x/x2w3x"

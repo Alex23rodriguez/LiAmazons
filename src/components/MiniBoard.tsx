@@ -32,7 +32,7 @@ export const MiniBoard: FC<{
   layout: string;
   width: string;
 }> = ({ layout, width }) => {
-  const fen = (layout + " w - 1") as FEN;
+  const fen = (layout.includes(" ") ? layout : layout + " w - 1") as FEN;
 
   const amz = new Amazons(fen);
   const pieces = amz.pieces();
