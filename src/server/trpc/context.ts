@@ -1,11 +1,8 @@
 // src/server/router/context.ts
-import * as trpc from "@trpc/server";
-import * as trpcNext from "@trpc/server/adapters/next";
-import {
-  Session,
-  unstable_getServerSession as getServerSession,
-} from "next-auth";
-import { authOptions as nextAuthOptions } from "../../pages/api/auth/[...nextauth]";
+import type { inferAsyncReturnType } from "@trpc/server";
+import type { CreateNextContextOptions } from "@trpc/server/adapters/next";
+import type { Session } from "next-auth";
+import { getServerAuthSession } from "../common/get-server-auth-session";
 import { prisma } from "../db/client";
 
 type CreateContextOptions = {
@@ -27,14 +24,15 @@ export const createContextInner = async (opts: CreateContextOptions) => {
  * This is the actual context you'll use in your router
  * @link https://trpc.io/docs/context
  **/
-export const createContext = async (
-  opts: trpcNext.CreateNextContextOptions,
-) => {
-  const session = await getServerSession(opts.req, opts.res, nextAuthOptions);
+export const createContext = async (opts: CreateNextContextOptions) => {
+  const { req, res } = opts;
+
+  // Get the session from the server using the unstable_getServerSession wrapper function
+  const session = await getServerAuthSession({ req, res });
 
   return await createContextInner({
     session,
   });
 };
 
-export type Context = trpc.inferAsyncReturnType<typeof createContext>;
+export type Context = inferAsyncReturnType<typeof createContext>;
