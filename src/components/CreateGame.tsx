@@ -1,6 +1,14 @@
-import { Button, ButtonGroup, Divider, Stack, Typography } from "@mui/material";
-import { useState } from "react";
+import {
+  Button,
+  ButtonGroup,
+  Divider,
+  Stack,
+  TextField,
+  Typography,
+} from "@mui/material";
+import { ChangeEventHandler, useState } from "react";
 import { MiniBoard } from "./MiniBoard";
+import { is_valid_layout } from "amazons-game-engine";
 
 const boardWidth = "250px";
 
@@ -14,7 +22,19 @@ const boards = [
 ];
 
 export const CreateGame = () => {
-  const [index, changeIndex] = useState(0);
+  const [index, setIndex] = useState(0);
+  const [customLayout, setCustomLayout] = useState("6/6/6/6/6/6");
+  const [layoutError, setLayoutError] = useState("");
+
+  const onChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    console.log(e.target.value);
+    const valid = is_valid_layout(e.target.value);
+    if (valid.error) setLayoutError(valid.error);
+    else {
+      setLayoutError("");
+      setCustomLayout(e.target.value);
+    }
+  };
 
   return (
     <Stack alignItems="center" spacing={2}>
@@ -25,20 +45,33 @@ export const CreateGame = () => {
         size="large"
         sx={{ width: "100%" }}
       >
-        <Button onClick={() => changeIndex(0)} sx={{ width: "25%" }}>
+        <Button onClick={() => setIndex(0)} sx={{ width: "25%" }}>
           6x6
         </Button>
-        <Button onClick={() => changeIndex(1)} sx={{ width: "25%" }}>
+        <Button onClick={() => setIndex(1)} sx={{ width: "25%" }}>
           8x8
         </Button>
-        <Button onClick={() => changeIndex(2)} sx={{ width: "25%" }}>
+        <Button onClick={() => setIndex(2)} sx={{ width: "25%" }}>
           10x10
         </Button>
-        <Button onClick={() => changeIndex(0)} sx={{ width: "25%" }}>
+        <Button onClick={() => setIndex(3)} sx={{ width: "25%" }}>
           Custom
         </Button>
       </ButtonGroup>
-      {boards[index]}
+      {index !== 3 ? (
+        boards[index]
+      ) : (
+        <>
+          <TextField
+            label="Enter FEN"
+            variant="standard"
+            onChange={onChange}
+            sx={{ width: boardWidth }}
+          />
+          <MiniBoard layout={customLayout} width={boardWidth} />
+          {layoutError && <Typography color="error">{layoutError}</Typography>}
+        </>
+      )}
       <Divider />
       <Typography>Time control</Typography>
       <ButtonGroup
