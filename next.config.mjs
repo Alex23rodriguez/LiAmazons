@@ -25,6 +25,7 @@ export default defineNextConfig({
       },
     });
     return config;
+  },
   // Next.js i18n docs: https://nextjs.org/docs/advanced-features/i18n-routing
   i18n: {
     locales: ["en"],
