@@ -69,6 +69,7 @@ export const MiniBoard: FC<{
         const sq = amz.index_to_square(i);
         return (
           <Square
+            key={sq}
             color={amz.square_color(sq)}
             token={
               pieces.w.includes(sq)

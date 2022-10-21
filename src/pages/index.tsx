@@ -15,8 +15,8 @@ const Home: NextPage = () => {
     //   className="container flex flex-col items-center justify-around p-6 mx-auto text-center font-bold"
     //   style={{ minHeight: "clamp(550px, 90vh, 10000px)" }}
     // >
-    <Stack>
-      <Typography variant="h2" color="primary">
+    <Stack alignItems='center' gap={5} sx={{textAlign: 'center'}}>
+      <Typography variant="h2" color="primary" >
         liamazons
       </Typography>
       {/* <span className="font-bold text-6xl text-center">/Typography></span> */}
@@ -28,7 +28,7 @@ const Home: NextPage = () => {
       {/* </span> */}
       <div
         style={{
-          width: "clamp(300px, 80vw, 500px)",
+          width: "clamp(300px, 80vw, 400px)",
         }}
       >
         <Image src={gif} />

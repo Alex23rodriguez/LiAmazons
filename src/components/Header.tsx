@@ -60,7 +60,7 @@ export const Header: FC<{ toggleTheme: () => void }> = ({ toggleTheme }) => {
       <StyledToolbar>
         <Link href="/">
           <a>
-            <Stack direction="row" gap={1}>
+            <Stack direction="row" gap={1} >
               <LogoIcon
                 fontSize="large"
                 sx={{ width: "34px", height: "34px" }}

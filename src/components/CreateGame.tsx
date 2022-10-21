@@ -13,9 +13,10 @@ import { is_valid_fen, is_valid_layout } from "amazons-game-engine";
 const boardWidth = "300px";
 
 const boards = [
-  <MiniBoard layout="3b2/6/b5/5w/6/2w3" width={boardWidth} />,
-  <MiniBoard layout="3b4/8/b6b/8/8/w6w/8/4w3" width={boardWidth} />,
+  <MiniBoard key={6} layout="3b2/6/b5/5w/6/2w3" width={boardWidth} />,
+  <MiniBoard key={8} layout="3b4/8/b6b/8/8/w6w/8/4w3" width={boardWidth} />,
   <MiniBoard
+    key={10}
     layout="3b2b3/10/10/b8b/10/10/w8w/10/10/3w2w3"
     width={boardWidth}
   />,
@@ -27,6 +28,8 @@ export const CreateGame = () => {
     "x3w2x/x6x/xb5x/x5bx/x6x/x2w3x"
   );
   const [layoutError, setLayoutError] = useState("");
+
+  const [time, setTime] = useState("no time");
 
   const onChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     const val = e.target.value.trim();
@@ -42,8 +45,8 @@ export const CreateGame = () => {
   };
 
   return (
-    <Stack alignItems="center" spacing={2}>
-      <Typography>Board</Typography>
+    <Stack alignItems="center" spacing={2} mb={4}>
+      <Typography variant="h3">Board</Typography>
       <ButtonGroup
         variant="outlined"
         color="primary"
@@ -79,19 +82,43 @@ export const CreateGame = () => {
         </>
       )}
       <Divider />
-      <Typography>Time control</Typography>
-      <ButtonGroup
-        variant="outlined"
-        color="primary"
+      <Button
+        sx={{ width: "50%" }}
         size="large"
-        sx={{ width: "100%" }}
+        color="secondary"
+        variant="contained"
       >
-        <Button sx={{ width: "20%" }}>3 + 2</Button>
-        <Button sx={{ width: "20%" }}>5 + 2</Button>
-        <Button sx={{ width: "20%" }}>10 + 10</Button>
-        <Button sx={{ width: "20%" }}>20 + 15</Button>
-        <Button sx={{ width: "20%" }}>unlimited</Button>
-      </ButtonGroup>
+        Create Game
+      </Button>
+      {/* <Typography variant="h3">Time control</Typography> */}
+      {/* <ButtonGroup */}
+      {/*   variant="outlined" */}
+      {/*   color="primary" */}
+      {/*   size="large" */}
+      {/*   sx={{ width: "100%" }} */}
+      {/* > */}
+      {/*   <Button sx={{ width: "25%", paddingLeft: 0, paddingRight: 0 }}> */}
+      {/*     5 + 3 */}
+      {/*   </Button> */}
+      {/*   <Button sx={{ width: "25%", paddingLeft: 0, paddingRight: 0 }}> */}
+      {/*     10 + 0 */}
+      {/*   </Button> */}
+      {/*   <Button */}
+      {/*     sx={{ */}
+      {/*       width: "25%", */}
+      {/*       paddingLeft: 0, */}
+      {/*       paddingRight: 0, */}
+      {/*     }} */}
+      {/*   > */}
+      {/*     no time */}
+      {/*   </Button> */}
+      {/*   <Button sx={{ width: "25%", paddingLeft: 0, paddingRight: 0 }}> */}
+      {/*     other */}
+      {/*   </Button> */}
+      {/* </ButtonGroup> */}
+      {/* <Typography variant="h4" component="h4"> */}
+      {/*   {time} */}
+      {/* </Typography> */}
     </Stack>
   );
 };
