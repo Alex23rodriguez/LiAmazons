@@ -15,7 +15,7 @@ const Home: NextPage = () => {
     //   className="container flex flex-col items-center justify-around p-6 mx-auto text-center font-bold"
     //   style={{ minHeight: "clamp(550px, 90vh, 10000px)" }}
     // >
-    <Stack alignItems='center' gap={5} sx={{textAlign: 'center'}}>
+    <Stack alignItems='center' gap={5} sx={{textAlign: 'center'}} mt={4}>
       <Typography variant="h2" color="primary" >
         liamazons
       </Typography>

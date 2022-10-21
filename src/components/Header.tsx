@@ -63,11 +63,11 @@ export const Header: FC<{ toggleTheme: () => void }> = ({ toggleTheme }) => {
             <Stack direction="row" gap={1} >
               <LogoIcon
                 fontSize="large"
-                sx={{ width: "34px", height: "34px" }}
+                sx={{ width: "34px", height: "34px",color: isDark? 'black' : 'white'  }}
               />
               <Typography
                 variant="h4"
-                sx={{ display: { xs: "none", sm: "block" } }}
+                sx={{ display: { xs: "none", sm: "block", color: isDark? 'black' : 'white' } }}
               >
                 liamazons
               </Typography>
@@ -104,7 +104,7 @@ export const Header: FC<{ toggleTheme: () => void }> = ({ toggleTheme }) => {
               </IconButton>
             </Tooltip>
           ) : (
-            <Button color="secondary" onClick={() => signIn()}>
+            <Button variant="contained" color="warning" onClick={() => signIn()} disableElevation>
               Sign in
             </Button>
           )}
