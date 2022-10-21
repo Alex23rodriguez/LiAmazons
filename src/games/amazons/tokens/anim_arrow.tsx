@@ -6,16 +6,24 @@ export const ArrowAnim: FC<{
 }> = (props) => (
   <div
     id={"arrow-anim"}
-    className="absolute z-10 grid place-items-center smooth"
     style={{
+      position: "absolute",
+      zIndex: 10,
+      placeItems: "center",
       width: props.size,
       height: props.size,
+      // display: 'grid',
       display: "none",
     }}
   >
     <div
-      className="absolute w-1/2 h-1/2 rounded-full"
-      style={{ backgroundColor: colorPalette["arrow"] }}
+      style={{
+        position: "absolute",
+        width: "50%",
+        height: "50%",
+        borderRadius: "9999px",
+        backgroundColor: colorPalette["arrow"],
+      }}
     />
   </div>
 );

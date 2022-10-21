@@ -10,16 +10,35 @@ const Square: FC<{ color: "light" | "dark"; token: string }> = ({
 }) => {
   return (
     <div
-      className="relative"
-      style={{ paddingBottom: "100%", backgroundColor: colorPalette[color] }}
+      style={{
+        position: "relative",
+        paddingBottom: "100%",
+        backgroundColor: colorPalette[color],
+      }}
     >
       {token === "w" || token == "b" ? (
-        <div className="absolute grid place-items-center w-full h-full">
+        <div
+          style={{
+            position: "absolute",
+            display: "grid",
+            placeItems: "center",
+            width: "100%",
+            height: "100%",
+          }}
+        >
           <SvgToken token={token} />
         </div>
       ) : (
         token === "x" && (
-          <div className="absolute grid place-items-center w-full h-full">
+          <div
+            style={{
+              position: "absolute",
+              display: "grid",
+              placeItems: "center",
+              width: "100%",
+              height: "100%",
+            }}
+          >
             <SvgToken token="x" />
           </div>
         )
@@ -39,7 +58,13 @@ export const MiniBoard: FC<{
   const { rows, cols } = amz.size();
 
   return (
-    <div className={`grid grid-cols-${cols}`} style={{ width }}>
+    <div
+      style={{
+        display: "grid",
+        gridTemplateColumns: `repeat(${cols}, 1fr)`,
+        width,
+      }}
+    >
       {Array.from({ length: rows * cols }, (_, i) => {
         const sq = amz.index_to_square(i);
         return (

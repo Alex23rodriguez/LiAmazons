@@ -21,8 +21,12 @@ export const Square: FC<{
   return (
     <div
       id={props.square}
-      className="relative w-full"
-      style={{ paddingBottom: "100%", backgroundColor: color() }}
+      style={{
+        position: "relative",
+        width: "100%",
+        paddingBottom: "100%",
+        backgroundColor: color(),
+      }}
       onClick={() => props.onClick(props.token, props.square)}
     >
       {props.token === "m" ? (
@@ -30,7 +34,7 @@ export const Square: FC<{
       ) : (
         props.token === "x" && <Arrow />
       )}
-      {/* <p className="absolute text-white">{props.square}</p> */}
+      {/* <p style={{ position: "absolute", color: "white" }}>{props.square}</p> */}
     </div>
   );
 };

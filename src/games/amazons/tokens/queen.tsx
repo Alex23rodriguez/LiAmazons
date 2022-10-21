@@ -16,8 +16,11 @@ const Queen = forwardRef<
     <div
       ref={ref}
       onClick={() => props.onClick(props.team, props.square)}
-      className="absolute z-20 grid place-items-center"
       style={{
+        position: "absolute",
+        zIndex: 20,
+        display: "gird",
+        placeItems: "center",
         width: props.size,
         height: props.size,
       }}

@@ -30,7 +30,7 @@ let myShootAudio: UIfx;
 if (global.document) {
   myMoveAudio = new UIfx(MoveAudio);
   myShootAudio = new UIfx(ShootAudio);
-  myShootAudio.setVolume(0.5)
+  myShootAudio.setVolume(0.5);
 }
 
 let animating: TSquare | null = null;
@@ -207,8 +207,12 @@ export const Board: FC<BoardProps<AmazonsState>> = ({
   return (
     <div
       id="board"
-      className={`select-none grid grid-cols-${cols}`}
-      style={{ width: board_size }}
+      style={{
+        width: board_size,
+        userSelect: "none",
+        display: "grid",
+        gridTemplateColumns: `repeat(${cols}, 1fr)`,
+      }}
     >
       {Object.entries(pieces).map(
         ([piece, sq_array]) =>

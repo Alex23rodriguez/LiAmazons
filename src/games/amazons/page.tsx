@@ -13,7 +13,7 @@ export const Page: FC<BoardProps<AmazonsState>> = (props) => {
       <Board {...props} />
       {props.isMultiplayer && props.playerID !== null && (
         <>
-          <div className="mt-4" />
+          <div style={{ marginTop: "1rem" }} />
           <Chat onSend={props.sendChatMessage} messages={props.chatMessages} />
         </>
       )}
