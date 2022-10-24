@@ -9,17 +9,25 @@ import {
 import { ChangeEventHandler, useState } from "react";
 import { MiniBoard } from "./MiniBoard";
 import { is_valid_fen, is_valid_layout } from "amazons-game-engine";
+import { clientEnv } from "../env/schema.mjs";
+
+import { LobbyClient } from "boardgame.io/client";
+
+const server = clientEnv.NEXT_PUBLIC_SERVER_URL;
+const lobbyClient = new LobbyClient({ server });
 
 const boardWidth = "300px";
 
+const layouts: { [n: number]: string } = {
+  6: "3b2/6/b5/5w/6/2w3",
+  8: "3b4/8/b6b/8/8/w6w/8/4w3",
+  10: "3b2b3/10/10/b8b/10/10/w8w/10/10/3w2w3",
+};
+
 const boards = [
-  <MiniBoard key={6} layout="3b2/6/b5/5w/6/2w3" width={boardWidth} />,
-  <MiniBoard key={8} layout="3b4/8/b6b/8/8/w6w/8/4w3" width={boardWidth} />,
-  <MiniBoard
-    key={10}
-    layout="3b2b3/10/10/b8b/10/10/w8w/10/10/3w2w3"
-    width={boardWidth}
-  />,
+  <MiniBoard key={6} layout={layouts[6]!} width={boardWidth} />,
+  <MiniBoard key={8} layout={layouts[8]!} width={boardWidth} />,
+  <MiniBoard key={10} layout={layouts[10]!} width={boardWidth} />,
 ];
 
 export const CreateGame = () => {
@@ -83,10 +91,22 @@ export const CreateGame = () => {
       )}
       <Divider />
       <Button
+        disabled={layoutError !== ""}
         sx={{ width: "50%" }}
         size="large"
         color="secondary"
         variant="contained"
+        onClick={() => {
+          let fen = index < 3 ? layouts[index * 2 + 6]! : customLayout;
+          if (!fen.includes(" ")) {
+            fen += " w - 1";
+          }
+          if (is_valid_fen(fen))
+            lobbyClient.createMatch("amazons", {
+              numPlayers: 2,
+              setupData: { fen },
+            });
+        }}
       >
         Create Game
       </Button>

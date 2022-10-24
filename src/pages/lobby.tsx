@@ -1,8 +1,7 @@
-import { Lobby } from "boardgame.io/react";
-import { NextPage } from "next";
-import { clientEnv } from "../env/schema.mjs";
-import { AmazonsGame as Amazons } from "../games/amazons/game";
-import { Page as AmazonsBoard } from "../games/amazons/page";
+// import { Lobby } from "boardgame.io/react";
+import type { NextPage } from "next";
+// import { AmazonsGame as Amazons } from "../games/amazons/game";
+// import { Page as AmazonsBoard } from "../games/amazons/page";
 import {
   Typography,
   Stack,
@@ -14,8 +13,6 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import { CreateGame } from "../components/CreateGame";
-
-const server = clientEnv.NEXT_PUBLIC_SERVER_URL;
 
 function a11yProps(index: number) {
   return {
