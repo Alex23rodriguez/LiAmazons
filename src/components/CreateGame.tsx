@@ -105,7 +105,21 @@ export const CreateGame = () => {
             lobbyClient.createMatch("amazons", {
               numPlayers: 2,
               setupData: { fen },
-            });
+            }).then(match=>{
+              lobbyClient.joinMatch(
+                "amazons",
+                match.matchID,
+                {
+                  playerName:"visitor"
+                }
+              ).then((joinedMatch)=>{
+                  // joinedMatch = {
+                  //   playerID,
+                  //   playerCredentials
+                  // }
+                  window.location.href = `/play/${match.matchID}`
+                })
+            })
         }}
       >
         Create Game
