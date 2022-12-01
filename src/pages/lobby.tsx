@@ -81,7 +81,7 @@ const LobbyPage: NextPage = () => {
           <CreateGame />
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
-          Item Two
+          There are currently no active games. Please create one yourself.
         </TabPanel>
       </Box>
     </Stack>

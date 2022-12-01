@@ -58,16 +58,26 @@ export const Header: FC<{ toggleTheme: () => void }> = ({ toggleTheme }) => {
   return (
     <AppBar position="sticky" enableColorOnDark>
       <StyledToolbar>
-        <Link href="/">
+        <Link href="/" aria-label="go to homepage">
           <a>
-            <Stack direction="row" gap={1} >
+            <Stack direction="row" gap={1}>
               <LogoIcon
                 fontSize="large"
-                sx={{ width: "34px", height: "34px",color: isDark? 'black' : 'white'  }}
+                sx={{
+                  width: "34px",
+                  height: "34px",
+                  color: isDark ? "black" : "white",
+                }}
               />
               <Typography
                 variant="h4"
-                sx={{ display: { xs: "none", sm: "block", color: isDark? 'black' : 'white' } }}
+                sx={{
+                  display: {
+                    xs: "none",
+                    sm: "block",
+                    color: isDark ? "black" : "white",
+                  },
+                }}
               >
                 liamazons
               </Typography>
@@ -104,7 +114,12 @@ export const Header: FC<{ toggleTheme: () => void }> = ({ toggleTheme }) => {
               </IconButton>
             </Tooltip>
           ) : (
-            <Button variant="contained" color="warning" onClick={() => signIn()} disableElevation>
+            <Button
+              variant="contained"
+              color="warning"
+              onClick={() => signIn()}
+              disableElevation
+            >
               Sign in
             </Button>
           )}

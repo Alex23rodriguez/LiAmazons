@@ -16,11 +16,11 @@ const Home: NextPage = () => {
     //   style={{ minHeight: "clamp(550px, 90vh, 10000px)" }}
     // >
     <Stack alignItems='center' gap={5} sx={{textAlign: 'center'}} mt={4}>
-      <Typography variant="h2" color="primary" >
+      <Typography variant="h2" color="primary" component="h1">
         liamazons
       </Typography>
       {/* <span className="font-bold text-6xl text-center">/Typography></span> */}
-      <Typography variant="h4" text-center>
+      <Typography variant="h4" text-center component="h2">
         The best way to play Game of the Amazons
       </Typography>
       {/* <span className="font-bold text-4xl text-center"> */}
@@ -31,7 +31,7 @@ const Home: NextPage = () => {
           width: "clamp(300px, 80vw, 400px)",
         }}
       >
-        <Image src={gif} />
+        <Image src={gif} alt="a gif showing gameplay of Game of the Amazons"/>
       </div>
       <Link href="/amazons">
         <a>
