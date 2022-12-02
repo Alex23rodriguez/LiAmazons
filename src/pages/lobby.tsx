@@ -101,7 +101,7 @@ const LobbyPage: NextPage = () => {
         <TabPanel value={value} index={1} dir={theme.direction}>
           {matches?.matches.length
             ? matches.matches.map((m) => {
-                console.log(m);
+                /* console.log(m); */
                 return <MatchInList key={m.matchID} {...m} />;
               })
             : "There are currently no active games. Please create one yourself."}
