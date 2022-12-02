@@ -30,7 +30,7 @@ const boards = [
   <MiniBoard key={10} layout={layouts[10]!} width={boardWidth} />,
 ];
 
-export const CreateGame = () => {
+export const CreateGame = (props: { playerName: string }) => {
   const [index, setIndex] = useState(0);
   const [customLayout, setCustomLayout] = useState(
     "x3w2x/x6x/xb5x/x5bx/x6x/x2w3x"
@@ -102,24 +102,26 @@ export const CreateGame = () => {
             fen += " w - 1";
           }
           if (is_valid_fen(fen))
-            lobbyClient.createMatch("amazons", {
-              numPlayers: 2,
-              setupData: { fen },
-            }).then(match=>{
-              lobbyClient.joinMatch(
-                "amazons",
-                match.matchID,
-                {
-                  playerName:"visitor"
-                }
-              ).then((joinedMatch)=>{
-                  // joinedMatch = {
-                  //   playerID,
-                  //   playerCredentials
-                  // }
-                  window.location.href = `/play/${match.matchID}`
-                })
-            })
+            lobbyClient
+              .createMatch("amazons", {
+                numPlayers: 2,
+                setupData: { fen },
+              })
+              .then((match) => {
+                /* match=>{ */
+                /* lobbyClient.joinMatch( */
+                /* "amazons", */
+                /* match.matchID, */
+                /* { */
+                /* playerName: props.playerName */
+                /* } */
+                /* ).then((joinedMatch)=>{ */
+                // joinedMatch = {
+                //   playerID,
+                //   playerCredentials
+                // }
+                window.location.href = `/play/${match.matchID}`;
+              });
         }}
       >
         Create Game
