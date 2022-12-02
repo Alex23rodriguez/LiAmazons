@@ -62,7 +62,7 @@ export function shootAnim(
   el.style.transform = transformStrFrom;
   // }, 50);
   setTimeout(() => {
-    el.style.display = "";
+    el.style.display = "grid";
     el.animate(
       { transform: transformStrTo },
       {

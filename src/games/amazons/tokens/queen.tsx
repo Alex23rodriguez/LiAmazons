@@ -19,7 +19,7 @@ const Queen = forwardRef<
       style={{
         position: "absolute",
         zIndex: 20,
-        display: "gird",
+        display: "grid",
         placeItems: "center",
         width: props.size,
         height: props.size,
