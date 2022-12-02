@@ -22,10 +22,10 @@ const MatchPage = () => {
     if (!router.isReady) return;
 
     setMatchId(router.query.matchId as string);
-    console.log(matchId);
   }, [router.isReady]);
+  useEffect(() => {
+    if (!matchId || typeof window === "undefined") return;
 
-  if (typeof window !== "undefined" && matchId && !match) {
     console.log("joining match...");
     lobbyClient
       .joinMatch("amazons", matchId, {
@@ -39,7 +39,7 @@ const MatchPage = () => {
         console.log("unable to join match... joining as spectator");
         setMatch({ playerID: null as any, playerCredentials: null as any });
       });
-  }
+  }, [matchId]);
 
   return match ? (
     <AmazonsClient
