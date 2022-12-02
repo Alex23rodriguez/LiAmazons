@@ -14,29 +14,37 @@ const MatchPage = () => {
   const [match, setMatch] = useState<LobbyAPI.JoinedMatch>();
 
   useEffect(() => {
-    console.log("router ready?");
     if (!router.isReady) return;
-
-    console.log("router ready!!");
 
     setMatchId(router.query.matchId as string);
     console.log(matchId);
   }, [router.isReady]);
-  console.log("MATCH ID IS", matchId);
 
   if (typeof window !== "undefined" && matchId && !match) {
     console.log("joining match...");
     lobbyClient
       .joinMatch("amazons", matchId, {
-        playerName: "testing",
+        playerName: new Date().toLocaleString(),
       })
       .then((joinedMatch) => {
         console.log("match joined!!", joinedMatch);
         setMatch(joinedMatch);
+      })
+      .catch((err) => {
+        console.log("unable to join match... joining as spectator");
+        setMatch({ playerID: null as any, playerCredentials: null as any });
       });
   }
 
-  return matchId ? <AmazonsClient matchID={matchId} /> : "Loading...";
+  return match ? (
+    <AmazonsClient
+      matchID={matchId}
+      credentials={match.playerCredentials}
+      playerID={match.playerID}
+    />
+  ) : (
+    "Loading..."
+  );
 };
 
 export default MatchPage;
