@@ -4,6 +4,7 @@ import { LobbyClient } from "boardgame.io/client";
 import { clientEnv } from "../../env/schema.mjs";
 import { useEffect, useState } from "react";
 import { LobbyAPI } from "boardgame.io";
+import { useSession } from "next-auth/react";
 
 const server = clientEnv.NEXT_PUBLIC_SERVER_URL;
 const lobbyClient = new LobbyClient({ server });
@@ -12,6 +13,10 @@ const MatchPage = () => {
   const router = useRouter();
   const [matchId, setMatchId] = useState<string>();
   const [match, setMatch] = useState<LobbyAPI.JoinedMatch>();
+
+  const { data: session } = useSession();
+  const pName =
+    session?.user?.email ?? "anon_" + Math.random().toString(36).substring(2);
 
   useEffect(() => {
     if (!router.isReady) return;
@@ -24,7 +29,7 @@ const MatchPage = () => {
     console.log("joining match...");
     lobbyClient
       .joinMatch("amazons", matchId, {
-        playerName: new Date().toLocaleString(),
+        playerName: pName,
       })
       .then((joinedMatch) => {
         console.log("match joined!!", joinedMatch);

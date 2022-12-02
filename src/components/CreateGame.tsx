@@ -9,12 +9,12 @@ import {
 import { ChangeEventHandler, useState } from "react";
 import { MiniBoard } from "./MiniBoard";
 import { is_valid_fen, is_valid_layout } from "amazons-game-engine";
-import { clientEnv } from "../env/schema.mjs";
+/* import { clientEnv } from "../env/schema.mjs"; */
 
-import { LobbyClient } from "boardgame.io/client";
+import type { LobbyClient } from "boardgame.io/client";
 
-const server = clientEnv.NEXT_PUBLIC_SERVER_URL;
-const lobbyClient = new LobbyClient({ server });
+/* const server = clientEnv.NEXT_PUBLIC_SERVER_URL; */
+/* const lobbyClient = new LobbyClient({ server }); */
 
 const boardWidth = "300px";
 
@@ -30,7 +30,7 @@ const boards = [
   <MiniBoard key={10} layout={layouts[10]!} width={boardWidth} />,
 ];
 
-export const CreateGame = (props: { playerName: string }) => {
+export const CreateGame = ({ lobbyClient }: { lobbyClient: LobbyClient }) => {
   const [index, setIndex] = useState(0);
   const [customLayout, setCustomLayout] = useState(
     "x3w2x/x6x/xb5x/x5bx/x6x/x2w3x"

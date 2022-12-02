@@ -11,9 +11,16 @@ import {
   AppBar,
   useTheme,
 } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CreateGame } from "../components/CreateGame";
 import { useSession } from "next-auth/react";
+
+import { clientEnv } from "../env/schema.mjs";
+import { LobbyClient } from "boardgame.io/client";
+import { LobbyAPI } from "boardgame.io";
+import { MatchInList } from "@/components/MatchInList";
+const server = clientEnv.NEXT_PUBLIC_SERVER_URL;
+const lobbyClient = new LobbyClient({ server });
 
 function a11yProps(index: number) {
   return {
@@ -54,13 +61,19 @@ const LobbyPage: NextPage = () => {
     setValue(newValue);
   };
 
+  const [matches, setMatches] = useState<LobbyAPI.MatchList>();
+
   const handleChangeIndex = (index: number) => {
     setValue(index);
   };
 
-  const { data: session } = useSession();
-  const pName =
-    session?.user?.email ?? "vst_" + Math.random().toString(36).substring(2);
+  useEffect(() => {
+    lobbyClient
+      .listMatches("amazons", {
+        updatedAfter: Date.now() - 86400000 /*one day*/,
+      })
+      .then((lst) => setMatches(lst));
+  }, []);
 
   return (
     <Stack alignItems="center" mt={4} spacing={3}>
@@ -83,10 +96,15 @@ const LobbyPage: NextPage = () => {
           </Tabs>
         </AppBar>
         <TabPanel value={value} index={0} dir={theme.direction}>
-          <CreateGame playerName={pName} />
+          <CreateGame lobbyClient={lobbyClient} />
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
-          There are currently no active games. Please create one yourself.
+          {matches?.matches.length
+            ? matches.matches.map((m) => {
+                console.log(m);
+                return <MatchInList matchID={m.matchID} players={m.players} />;
+              })
+            : "There are currently no active games. Please create one yourself."}
         </TabPanel>
       </Box>
     </Stack>
