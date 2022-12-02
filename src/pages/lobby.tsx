@@ -13,6 +13,7 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import { CreateGame } from "../components/CreateGame";
+import { useSession } from "next-auth/react";
 
 function a11yProps(index: number) {
   return {
@@ -57,6 +58,10 @@ const LobbyPage: NextPage = () => {
     setValue(index);
   };
 
+  const { data: session } = useSession();
+  const pName =
+    session?.user?.email ?? "vst_" + Math.random().toString(36).substring(2);
+
   return (
     <Stack alignItems="center" mt={4} spacing={3}>
       <Typography variant="h2" color="primary">
@@ -78,7 +83,7 @@ const LobbyPage: NextPage = () => {
           </Tabs>
         </AppBar>
         <TabPanel value={value} index={0} dir={theme.direction}>
-          <CreateGame />
+          <CreateGame playerName={pName} />
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
           There are currently no active games. Please create one yourself.

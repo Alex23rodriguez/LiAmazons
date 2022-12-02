@@ -30,6 +30,7 @@ export const serverSchema = z.object({
  */
 export const clientSchema = z.object({
   NEXT_PUBLIC_SERVER_URL: z.string().url(),
+  NEXT_PUBLIC_BGIO_URL: z.string().url(),
 });
 
 /**
@@ -40,6 +41,6 @@ export const clientSchema = z.object({
  */
 export const clientEnv = {
   // NEXT_PUBLIC_SERVER_URL: "https://liamazons-server.herokuapp.com/",
-  // NEXT_PUBLIC_SERVER_URL: "https://liamazons-server.up.railway.app/",
   NEXT_PUBLIC_SERVER_URL: "https://liamz.up.railway.app/",
+  NEXT_PUBLIC_BGIO_URL: "http://liamz.up.railway.app",
 };
