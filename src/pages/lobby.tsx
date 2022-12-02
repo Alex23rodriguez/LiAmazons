@@ -70,7 +70,7 @@ const LobbyPage: NextPage = () => {
   useEffect(() => {
     lobbyClient
       .listMatches("amazons", {
-        updatedAfter: Date.now() - 86400000 /*one day*/,
+        updatedAfter: Date.now() - 86400000 * 7 /*one week*/,
       })
       .then((lst) => setMatches(lst));
   }, []);
