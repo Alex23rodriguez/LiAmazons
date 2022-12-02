@@ -58,8 +58,8 @@ export const Header: FC<{ toggleTheme: () => void }> = ({ toggleTheme }) => {
   return (
     <AppBar position="sticky" enableColorOnDark>
       <StyledToolbar>
-        <Link href="/" aria-label="go to homepage">
-          <a>
+        <Link href="/">
+          <a aria-label="homepage">
             <Stack direction="row" gap={1}>
               <LogoIcon
                 fontSize="large"
@@ -160,7 +160,7 @@ export const Header: FC<{ toggleTheme: () => void }> = ({ toggleTheme }) => {
             anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
           >
             <Link href="/profile">
-              <a>
+              <a aria-label="profile">
                 <MenuItem>
                   <ListItemIcon>
                     <PersonIcon fontSize="small" />
@@ -170,7 +170,7 @@ export const Header: FC<{ toggleTheme: () => void }> = ({ toggleTheme }) => {
               </a>
             </Link>
             <Link href="/settings">
-              <a>
+              <a aria-label="settings">
                 <MenuItem>
                   <ListItemIcon>
                     <SettingsIcon fontSize="small" />
