@@ -102,7 +102,7 @@ const LobbyPage: NextPage = () => {
           {matches?.matches.length
             ? matches.matches.map((m) => {
                 console.log(m);
-                return <MatchInList matchID={m.matchID} players={m.players} />;
+                return <MatchInList key={m.matchID} {...m} />;
               })
             : "There are currently no active games. Please create one yourself."}
         </TabPanel>
