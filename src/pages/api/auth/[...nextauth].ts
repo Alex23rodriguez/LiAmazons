@@ -43,7 +43,7 @@ export const authOptions: NextAuthOptions = {
   ],
   // TODO: add secret?
   // TODO: disable debug messages
-  debug: true,
+  debug: false,
 };
 
 export default NextAuth(authOptions);
