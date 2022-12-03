@@ -11,7 +11,8 @@ export const ArrowAnim: FC<{
       zIndex: 10,
       placeItems: "center",
       width: props.size,
-      height: props.size,
+      aspectRatio: "1/1",
+      /* height: props.size, */
       // display: 'grid',
       display: "none",
     }}

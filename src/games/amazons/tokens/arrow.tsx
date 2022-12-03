@@ -9,7 +9,8 @@ export const Arrow: FC = () => (
       display: "grid",
       placeItems: "center",
       width: "100%",
-      height: "100%",
+      aspectRatio: "1/1",
+      /* height: "100%", */
       zIndex: 10,
     }}
   >

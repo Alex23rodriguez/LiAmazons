@@ -137,7 +137,7 @@ export const Board: FC<BoardProps<AmazonsState>> = ({
   }
 
   // board dimensions
-  const board_size = "min(80vh, 80vw)";
+  const board_size = "100%";
   const square_size = `calc(${board_size} / ${cols})`;
 
   const onClick = (token: string, sq: TSquare) => {

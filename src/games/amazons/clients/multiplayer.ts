@@ -1,7 +1,7 @@
 import { Client } from "boardgame.io/react";
 import { SocketIO } from "boardgame.io/multiplayer";
 import { AmazonsGame } from "../game";
-import { Layout } from "../layouts/singleplayer";
+import { Layout } from "../layouts/multiplayer";
 import { clientEnv } from "@/env/schema.mjs";
 
 const App = Client({

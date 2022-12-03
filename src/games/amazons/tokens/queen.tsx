@@ -22,7 +22,8 @@ const Queen = forwardRef<
         display: "grid",
         placeItems: "center",
         width: props.size,
-        height: props.size,
+        aspectRatio: "1/1",
+        /* height: props.size, */
       }}
     >
       <SvgToken token={props.team} />
