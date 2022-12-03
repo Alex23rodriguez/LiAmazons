@@ -1,4 +1,6 @@
-import Paper from "@mui/material/Paper";
+import { useTheme } from "@mui/material";
+import Card from "@mui/material/Card";
+import { SvgToken } from "../games/amazons/tokens/svgtoken";
 
 export const PlayerInfo = ({
   id,
@@ -9,9 +11,24 @@ export const PlayerInfo = ({
   isPlayer: boolean;
   turn: boolean;
 }) => {
+  const theme = useTheme();
   return (
-    <Paper style={{ marginBottom: "20px" }}>
-      Hello! im {id} {isPlayer && "(you)"}
-    </Paper>
+    <Card
+      elevation={2}
+      sx={{
+        height: 1,
+        flex: 1,
+        placeItems: "center",
+        display: "grid",
+        fontWeight: "bold",
+        /* outline: "solid", */
+        backgroundColor: turn ? theme.palette.success.main : "gray",
+      }}
+    >
+      Player {id} {isPlayer && "(you)"}
+      <div style={{ height: "30px" }}>
+        <SvgToken token={id === "0" ? "w" : "b"} />
+      </div>
+    </Card>
   );
 };

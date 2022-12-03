@@ -212,6 +212,7 @@ export const Board: FC<BoardProps<AmazonsState>> = ({
         userSelect: "none",
         display: "grid",
         gridTemplateColumns: `repeat(${cols}, 1fr)`,
+        position: 'relative'
       }}
     >
       {Object.entries(pieces).map(
