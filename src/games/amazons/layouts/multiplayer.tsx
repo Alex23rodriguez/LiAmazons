@@ -1,13 +1,14 @@
 import { BoardProps } from "boardgame.io/dist/types/packages/react";
 import { createContext, FC } from "react";
 // import { Board } from "./board";
-import { Board } from "./board";
-import Chat from "./chat";
-import { AmazonsState } from "./game";
+import { Board } from "../board";
+import Chat from "../chat";
+import { AmazonsState } from "../game";
 
 export const GameContext = createContext(null);
 
-export const Page: FC<BoardProps<AmazonsState>> = (props) => {
+export const Layout: FC<BoardProps<AmazonsState>> = (props) => {
+  /* console.log(props.ctx) */
   return (
     <>
       <Board {...props} />

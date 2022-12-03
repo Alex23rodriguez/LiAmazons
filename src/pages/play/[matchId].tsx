@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import AmazonsClient from "../../components/MultiplayerGame";
+import MultiplayerClient from "../../games/amazons/clients/multiplayer";
 import { LobbyClient } from "boardgame.io/client";
 import { clientEnv } from "../../env/schema.mjs";
 import { useEffect, useState } from "react";
@@ -30,6 +30,8 @@ const MatchPage = () => {
     lobbyClient
       .joinMatch("amazons", matchId, {
         playerName: pName,
+        /* playerID: "1", */
+        /* playerID: pName */
       })
       .then((joinedMatch) => {
         console.log("match joined!!", joinedMatch);
@@ -42,7 +44,7 @@ const MatchPage = () => {
   }, [matchId]);
 
   return match ? (
-    <AmazonsClient
+    <MultiplayerClient
       matchID={matchId}
       credentials={match.playerCredentials}
       playerID={match.playerID}

@@ -1,10 +1,4 @@
-import { Client } from "boardgame.io/react";
-import { AmazonsGame } from "../../games/amazons/game";
-import { Page } from "../../games/amazons/page";
+import SingleplayerClient from "../../games/amazons/clients/singleplayer";
 
-const App = Client({
-  game: AmazonsGame,
-  board: Page,
-  debug: false,
-});
-export default App;
+const Local = () => <SingleplayerClient />;
+export default Local
