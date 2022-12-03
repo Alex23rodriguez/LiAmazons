@@ -25,11 +25,12 @@ const Chat = ({
     <div>
       <div
         style={{
-          height: 200,
+          height: "calc(100vh - 550px)",
           maxWidth: 400,
           padding: ".5em",
           overflow: "scroll",
-          border: "1px solid black",
+          border: "2px solid black",
+          borderRadius: "3px",
         }}
       >
         {messages.map((message) => (
@@ -39,8 +40,10 @@ const Chat = ({
         ))}
       </div>
       <form onSubmit={triggerSend}>
-        <input onChange={onChange} value={message} />
-        <button type="submit">Send</button>
+        <input style={{ width: "80%" }} onChange={onChange} value={message} />
+        <button style={{ width: "20%" }} type="submit">
+          Send
+        </button>
       </form>
     </div>
   );
