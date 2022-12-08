@@ -29,7 +29,7 @@ const Chat = ({
           maxWidth: 400,
           padding: ".5em",
           overflow: "scroll",
-          border: "2px solid black",
+          border: "2px solid grey",
           borderRadius: "3px",
         }}
       >

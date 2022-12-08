@@ -12,6 +12,10 @@ export const PlayerInfo = ({
   turn: boolean;
 }) => {
   const theme = useTheme();
+  let color =
+    theme.palette.mode === "light"
+      ? theme.palette.success.light
+      : theme.palette.success.main;
   return (
     <Card
       elevation={2}
@@ -22,7 +26,7 @@ export const PlayerInfo = ({
         display: "grid",
         fontWeight: "bold",
         /* outline: "solid", */
-        backgroundColor: turn ? theme.palette.success.main : "gray",
+        backgroundColor: turn ? color : "gray",
       }}
     >
       Player {id} {isPlayer && "(you)"}
