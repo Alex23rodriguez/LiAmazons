@@ -25,8 +25,8 @@ const Chat = ({
     <div>
       <div
         style={{
-          height: "calc(100vh - 550px)",
-          maxWidth: 400,
+          height: "calc(100vh - 100vw - 150px)",
+          /* maxWidth: , */
           padding: ".5em",
           overflow: "scroll",
           border: "2px solid grey",
