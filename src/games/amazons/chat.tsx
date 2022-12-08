@@ -22,15 +22,18 @@ const Chat = ({
   };
 
   return (
-    <div>
+    <div style={{ display: "flex", flexDirection: "column" }}>
       <div
         style={{
-          height: "calc(100vh - 100vw - 150px)",
+          flexGrow: 1,
+          height: "calc(100vh - 100vw - 185px)",
+          minHeight: "100px",
           /* maxWidth: , */
           padding: ".5em",
           overflow: "scroll",
           border: "2px solid grey",
           borderRadius: "3px",
+          marginBottom: "5px",
         }}
       >
         {messages.map((message) => (

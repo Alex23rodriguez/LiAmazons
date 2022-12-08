@@ -30,7 +30,7 @@ export const PlayerInfo = ({
       }}
     >
       Player {id} {isPlayer && "(you)"}
-      <div style={{ height: "30px" }}>
+      <div style={{ height: "3rem" }}>
         <SvgToken token={id === "0" ? "w" : "b"} />
       </div>
     </Card>
