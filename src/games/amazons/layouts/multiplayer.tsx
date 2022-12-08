@@ -31,6 +31,7 @@ export const Layout: FC<BoardProps<AmazonsState>> = (props) => {
           >
             {props.ctx.playOrder.map((p) => (
               <PlayerInfo
+                key={p}
                 id={p}
                 isPlayer={props.playerID === p}
                 turn={props.ctx.currentPlayer === p}

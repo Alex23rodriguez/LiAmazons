@@ -12,7 +12,7 @@ export const PlayerInfo = ({
   turn: boolean;
 }) => {
   const theme = useTheme();
-  let color =
+  const color =
     theme.palette.mode === "light"
       ? theme.palette.success.light
       : theme.palette.success.main;
